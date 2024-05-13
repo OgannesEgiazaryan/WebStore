@@ -25,6 +25,7 @@ namespace WebStore.WebUI.Controllers
 
 
         /*ЕСЛИ ОСТАНЕТЬСЯ ВРЕМЯ, ТО ПОРАБОАТЬСЯ С ТАБЛИЦЕЙ ORDERS ДЛЯ АДМИНА*/
+
         IWebRepository repository;
 
         public Admin1Controller(IWebRepository repo)
