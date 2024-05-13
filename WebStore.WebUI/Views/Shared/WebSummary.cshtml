@@ -1,0 +1,31 @@
+﻿@model WebStore.Domain.Entities.SoftWares
+
+<div class="well">
+    @if (Model.Photo1 != null)
+    {
+        <div class="pull-left" style="margin-right: 10px">
+            @Html.Hidden("softId", @Model.ID_SoftWare)
+
+            <img class="img-thumbnail" width="75" height="75"
+                 src="@Url.Action("GetImage", "Web",
+                new { softId = Model.ID_SoftWare })" />
+        </div>
+    }
+    <h3>
+        <strong>@Model.Name</strong>
+        <p>Категория: @Model.Category.Name</p>
+        <p>Издатель: @Model.Seller.Name</p>
+
+        <span class="pull-right label label-primary">@Model.Price.ToString("# руб")</span>
+    </h3>
+    @using (Html.BeginForm("AddToCart", "Cart"))
+    {
+        <div class="pull-right">
+            @Html.HiddenFor(x => x.ID_SoftWare)
+            @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+            @Html.Hidden("softId", @Model.ID_SoftWare)
+            <input type="submit" class="btn btn-success" value="Добавить в корзину" />
+        </div>
+    }
+    <span class="lead">@Model.Description</span>
+</div>

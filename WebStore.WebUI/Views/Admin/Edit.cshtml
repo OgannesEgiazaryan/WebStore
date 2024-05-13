@@ -1,0 +1,93 @@
+﻿@model WebStore.Domain.Entities.SoftWares
+
+@{
+    ViewBag.Title = "Админ панель: редактирование программного обеспечения";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    HtmlHelper.ClientValidationEnabled = false;
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = false;
+}
+
+<div class="panel">
+    <div class="panel-heading">
+        <h3>Редактирование программного обеспечения «@Model.Name»</h3>
+    </div>
+
+    @using (Html.BeginForm("Edit", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="panel-body">
+            @Html.HiddenFor(m => m.ID_SoftWare)
+
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.ID_Category)</label>
+                @Html.DropDownListFor(m => m.ID_Category, new SelectList(ViewBag.Categories, "ID_Category", "Name"), "Выберите категорию", new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.ID_Seller)</label>
+                @Html.DropDownListFor(m => m.ID_Seller, new SelectList(ViewBag.Sellers, "ID_Seller", "Name"), "Выберите продавца", new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.ID_Event)</label>
+                @Html.DropDownListFor(m => m.ID_Event, new SelectList(ViewBag.Events, "Event_ID", "Name"), "Выберите событие", new { @class = "form-control" })
+            </div>
+
+            @foreach (var property in ViewData.ModelMetadata.Properties.Where(p => !p.IsComplexType && p.PropertyName != "ID_SoftWare" && p.PropertyName != "ID_Category" && p.PropertyName != "ID_Seller" && p.PropertyName != "ID_Event"))
+            {
+                switch (property.PropertyName)
+                {
+                    case "ID_SoftWare":
+                    case "Photo1":
+                    case "Image_Mime_Type":
+                        // Ничего не делать
+                        break;
+                    default:
+                        <div class="form-group">
+                            <label>@(property.DisplayName ?? property.PropertyName)</label>
+                            @if (property.PropertyName == "Description")
+                            {
+                                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = 5 })
+                            }
+                            else
+                            {
+                                @Html.TextBox(property.PropertyName, null,
+                                                 new { @class = "form-control" })
+                            }
+                            @Html.ValidationMessage(property.PropertyName)
+                        </div>
+                        break;
+                }
+            }
+            <div class="form-group">
+                <div style="position:relative;">
+                    <label>Картинка</label>
+                    <a class='btn' href='javascript:;'>
+                        Выберите файл...
+                        <input type="file" name="Image" size="40"
+                               style="position:absolute;z-index:2;top:0;
+                                left:0;filter: alpha(opacity=0); opacity:0;
+                                background-color:transparent;color:transparent;"
+                               onchange='$("#upload-file-info").html($(this).val());'>
+                    </a>
+                    <span class='label label-info' id="upload-file-info"></span>
+                </div>
+                @if (Model.Photo1 == null)
+                {
+                    <div class="form-control-static">Нет картинки</div>
+                }
+                else
+                {
+                    @Html.Hidden("softId", @Model.ID_SoftWare)
+
+                    <img class="img-thumbnail" width="150" height="150"
+                         src="@Url.Action("GetImage", "Web",
+                        new { softId = Model.ID_SoftWare })" />
+                }
+            </div>
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="Сохранить" class="btn btn-primary" />
+            @Html.ActionLink("Отменить изменения и вернуться к списку", "Index", null, new { @class = "btn btn-default" })
+        </div>
+    }
+</div>
