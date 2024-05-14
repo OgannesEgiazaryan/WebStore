@@ -28,6 +28,33 @@
                 @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(m => m.Email)
             </div>
+
+            <div class="form-group">
+                <div style="position:relative;">
+                    <label>Фотография</label>
+                    <a class='btn' href='javascript:;'>
+                        Выберите файл...
+                        <input type="file" name="Image" size="40"
+                               style="position:absolute;z-index:2;top:0;
+                                left:0;filter: alpha(opacity=0); opacity:0;
+                                background-color:transparent;color:transparent;"
+                               onchange='$("#upload-file-info").html($(this).val());'>
+                    </a>
+                    <span class='label label-info' id="upload-file-info"></span>
+                </div>
+                @if (Model.Photo == null)
+                {
+                    <div class="form-control-static">Нет фотографии</div>
+                }
+                else
+                {
+                    @Html.Hidden("sellerId", @Model.ID_Seller)
+
+                    <img class="img-thumbnail" width="150" height="150"
+                         src="@Url.Action("GetImage", "Web",
+                        new { sellerId = Model.ID_Seller })" />
+                }
+            </div>
         </div>
         <div class="panel-footer">
             <input type="submit" value="Сохранить" class="btn btn-primary" />

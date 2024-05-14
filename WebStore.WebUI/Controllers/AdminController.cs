@@ -147,16 +147,16 @@ namespace WebStore.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit1(Categorys category)
+        public ActionResult Edit1(Categorys category, HttpPostedFileBase image = null)
         {
             if (ModelState.IsValid)
             {
-                //if (image != null)
-                //{
-                //    category.Image_Mime_Type = image.ContentType;
-                //    category.Photo1 = new byte[image.ContentLength];
-                //    image.InputStream.Read(software.Photo1, 0, image.ContentLength);
-                //}
+                if (image != null)
+                {
+                    category.ImageMimeType = image.ContentType;
+                    category.Photo = new byte[image.ContentLength];
+                    image.InputStream.Read(category.Photo, 0, image.ContentLength);
+                }
                 repository.SaveCat(category);
                 TempData["message"] = $"Изменения в категории \"{category.Name}\" были сохранены";
                 return RedirectToAction("Index1");
@@ -367,10 +367,16 @@ namespace WebStore.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit5(Sellers seller)
+        public ActionResult Edit5(Sellers seller, HttpPostedFileBase image = null)
         {
             if (ModelState.IsValid)
             {
+                if (image != null)
+                {
+                    seller.ImageMimeType = image.ContentType;
+                    seller.Photo = new byte[image.ContentLength];
+                    image.InputStream.Read(seller.Photo, 0, image.ContentLength);
+                }
                 repository.SaveSeller(seller);
                 TempData["message"] = $"Изменения в продавце \"{seller.Name}\" были сохранены";
                 return RedirectToAction("Index");

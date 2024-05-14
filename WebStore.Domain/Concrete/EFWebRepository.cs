@@ -72,6 +72,8 @@ namespace GameStore.Domain.Concrete
                 {
                     dbEntry.Name = category.Name;
                     dbEntry.Description = category.Description;
+                    dbEntry.Photo = category.Photo;
+                    dbEntry.ImageMimeType= category.ImageMimeType;
                 }
             }
             context.SaveChanges();
@@ -105,6 +107,8 @@ namespace GameStore.Domain.Concrete
                 {
                     dbEntry.Name = seller.Name;
                     dbEntry.Email = seller.Email;
+                    dbEntry.Photo = seller.Photo;
+                    dbEntry.ImageMimeType = seller.ImageMimeType;
                 }
             }
             context.SaveChanges();

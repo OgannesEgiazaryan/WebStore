@@ -106,6 +106,10 @@ namespace WebStore.Domain.Entities
         [Required(ErrorMessage = "Пожалуйста, введите описание для категории программного обеспечения")]
         public string Description { get; set; }
 
+        public byte[] Photo { get; set; }
+
+        public string ImageMimeType { get; set; }
+
         public virtual ICollection<SoftWares> SoftWares { get; set; }
     }
 
@@ -119,6 +123,10 @@ namespace WebStore.Domain.Entities
         public string Name { get; set; }
 
         public string Email { get; set; }
+
+        public byte[] Photo { get; set; }
+
+        public string ImageMimeType { get; set; }
 
         public virtual ICollection<SoftWares> SoftWares { get; set; }
     }
