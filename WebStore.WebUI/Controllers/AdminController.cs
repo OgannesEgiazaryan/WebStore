@@ -71,7 +71,7 @@ namespace WebStore.WebUI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(SoftWares software, HttpPostedFileBase image = null)
+        public ActionResult Edit(SoftWares software, HttpPostedFileBase image = null, HttpPostedFileBase Image1 = null, HttpPostedFileBase Image2 = null, HttpPostedFileBase Image3 = null)
         {
             // Подготовка списков для DropDownList
             ViewBag.Categories = repository.Category
@@ -90,6 +90,24 @@ namespace WebStore.WebUI.Controllers
                     software.Image_Mime_Type = image.ContentType;
                     software.Photo1 = new byte[image.ContentLength];
                     image.InputStream.Read(software.Photo1, 0, image.ContentLength);
+                }
+                if(Image1 != null)
+                {
+                    software.Image_Mime_Type = image.ContentType;
+                    software.Image1 = new byte[image.ContentLength];
+                    image.InputStream.Read(software.Image1, 0, image.ContentLength);
+                }
+                if (Image2 != null)
+                {
+                    software.Image_Mime_Type = image.ContentType;
+                    software.Image2 = new byte[image.ContentLength];
+                    image.InputStream.Read(software.Image2, 0, image.ContentLength);
+                }
+                if (Image3 != null)
+                {
+                    software.Image_Mime_Type = image.ContentType;
+                    software.Image3 = new byte[image.ContentLength];
+                    image.InputStream.Read(software.Image3, 0, image.ContentLength);
                 }
                 repository.SaveSoft(software);
                 TempData["message"] = $"Изменения в программном обеспечении \"{software.Name}\" были сохранены";
