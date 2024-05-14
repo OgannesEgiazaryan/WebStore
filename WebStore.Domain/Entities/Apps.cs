@@ -64,6 +64,22 @@ namespace WebStore.Domain.Entities
 
         public string Image_Mime_Type { get; set; }
 
+        [DataType(DataType.MultilineText)]
+        [Display(Name = "Описание(длинное)")]
+        [Required(ErrorMessage = "Пожалуйста, введите описание для программного обеспечения")]
+        public string LongDescription { get; set; }
+
+        [Display(Name = "Операционные системы")]
+        [Required(ErrorMessage = "Пожалуйста, введите поддерживаемые ОС")]
+        public string OS { get; set; }
+
+        [Display(Name = "ОЗУ(Гб)")]
+        [Required(ErrorMessage = "Пожалуйста, введите минимально требуемое количество ОЗУ")]
+        [Range(0, int.MaxValue, ErrorMessage = "Пожалуйста, введите положительное значение для веса")]
+        public int RAM { get; set; }
+
+
+
         //public byte Image1 { get; set; }
 
         //public byte Image2 { get; set; }

@@ -1,0 +1,37 @@
+﻿@model WebStore.Domain.Entities.Events
+
+@{
+    ViewBag.Title = "Админ панель: редактирование события";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    HtmlHelper.ClientValidationEnabled = false;
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = false;
+}
+
+<div class="panel">
+    <div class="panel-heading">
+        <h3>Редактирование события «@Model.Event_Name»</h3>
+    </div>
+
+    @using (Html.BeginForm("Edit2", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="panel-body">
+            @Html.HiddenFor(m => m.Event_ID)
+
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.Event_Name)</label>
+                @Html.EditorFor(m => m.Event_Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.Event_Name)
+            </div>
+
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.Event_Description)</label>
+                @Html.TextAreaFor(m => m.Event_Description, new { @class = "form-control", rows = 5 })
+                @Html.ValidationMessageFor(m => m.Event_Description)
+            </div>
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="Сохранить" class="btn btn-primary" />
+            @Html.ActionLink("Отменить изменения и вернуться к списку", "Index2", null, new { @class = "btn btn-default" })
+        </div>
+    }
+</div>

@@ -153,12 +153,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\Admin3Controller.cs" />
-    <Compile Include="Controllers\Admin4Controller.cs" />
-    <Compile Include="Controllers\Admin5Controller.cs" />
     <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\Admin1Controller.cs" />
-    <Compile Include="Controllers\Admin2Controller.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NavController.cs" />
@@ -236,14 +231,15 @@
     <Content Include="Views\Admin\Index3.cshtml" />
     <Content Include="Views\Admin\Index4.cshtml" />
     <Content Include="Views\Admin\Index5.cshtml" />
+    <Content Include="Views\Admin\Edit1.cshtml" />
+    <Content Include="Views\Admin\Edit2.cshtml" />
+    <Content Include="Views\Admin\Edit3.cshtml" />
+    <Content Include="Views\Admin\Edit4.cshtml" />
+    <Content Include="Views\Admin\Edit5.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Admin1\" />
-    <Folder Include="Views\Admin2\" />
-    <Folder Include="Views\Admin3\" />
-    <Folder Include="Views\Admin4\" />
-    <Folder Include="Views\Admin5\" />
+    <Folder Include="Media_Content\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

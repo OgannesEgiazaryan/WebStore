@@ -1,0 +1,49 @@
+﻿@model WebStore.Domain.Entities.Orders
+
+@{
+    ViewBag.Title = "Админ панель: редактирование заказа";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    HtmlHelper.ClientValidationEnabled = false;
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = false;
+}
+
+<div class="panel">
+    <div class="panel-heading">
+        <h3>Редактирование заказа №«@Model.Order_ID»</h3>
+    </div>
+
+    @using (Html.BeginForm("Edit3", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="panel-body">
+            @Html.HiddenFor(m => m.Order_ID)
+
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.Order_Name)</label>
+                @Html.EditorFor(m => m.Order_Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.Order_Name)
+            </div>
+
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.Order_Email)</label>
+                @Html.EditorFor(m => m.Order_Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.Order_Email)
+            </div>
+
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.Order_Soft_ID)</label>
+                @Html.DropDownListFor(m => m.Order_Soft_ID, new SelectList(ViewBag.SoftWares, "ID_SoftWare", "Name"), "Выберите программу", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Order_Soft_ID)
+            </div>
+
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.Order_Quantity)</label>
+                @Html.EditorFor(m => m.Order_Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.Order_Quantity)
+            </div>
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="Сохранить" class="btn btn-primary" />
+            @Html.ActionLink("Отменить изменения и вернуться к списку", "Index3", null, new { @class = "btn btn-default" })
+        </div>
+    }
+</div>

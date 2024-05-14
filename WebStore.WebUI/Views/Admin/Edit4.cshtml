@@ -1,0 +1,55 @@
+﻿@model WebStore.Domain.Entities.Reviews
+
+@{
+    ViewBag.Title = "Админ панель: редактирование отзыва";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    HtmlHelper.ClientValidationEnabled = false;
+    HtmlHelper.UnobtrusiveJavaScriptEnabled = false;
+}
+
+<div class="panel">
+    <div class="panel-heading">
+        <h3>Редактирование отзыва</h3>
+    </div>
+
+    @using (Html.BeginForm("Edit4", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="panel-body">
+            @Html.HiddenFor(m => m.ID_Review)
+
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.Date)</label>
+                @Html.TextBoxFor(m => m.Date, "{0:dd-MM-yyyyTHH:mm}", new { @class = "form-control", type = "datetime-local" })
+                @Html.ValidationMessageFor(m => m.Date)
+            </div>
+
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.Text)</label>
+                @Html.TextAreaFor(m => m.Text, new { @class = "form-control", rows = 5 })
+                @Html.ValidationMessageFor(m => m.Text)
+            </div>
+
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.Rating)</label>
+                @Html.EditorFor(m => m.Rating, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.Rating)
+            </div>
+
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.ID_Software)</label>
+                @Html.DropDownListFor(m => m.ID_Software, new SelectList(ViewBag.Softwares, "ID_Software", "Name"), "Выберите программу", new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ID_Software)
+            </div>
+
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.User)</label>
+                @Html.EditorFor(m => m.User, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.User)
+            </div>
+        </div>
+        <div class="panel-footer">
+            <input type="submit" value="Сохранить" class="btn btn-primary" />
+            @Html.ActionLink("Отменить изменения и вернуться к списку", "Index4", null, new { @class = "btn btn-default" })
+        </div>
+    }
+</div>

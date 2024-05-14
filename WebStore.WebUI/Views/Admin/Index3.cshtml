@@ -30,14 +30,14 @@
                 <tr>
                     <td class="text-right">@order.Order_ID</td>
                     @Html.Hidden("orderID", order.Order_ID)
-                    <td>@order.Order_Name</td>
+                    <td>@Html.ActionLink(order.Order_Name, "Edit3", new { orderID = order.Order_ID })</td>
                     <td>@order.Order_Email</td>
                     <td>@order.Software.Name</td>
                     <td>@order.Order_Quantity</td>
                     <td class="text-center">
-                        @using (Html.BeginForm("Delete", "Admin3"))
+                        @using (Html.BeginForm("Delete3", "Admin3"))
                         {
-                            @Html.Hidden("orderID", order.Order_ID)
+                            @Html.Hidden("Order_ID", order.Order_ID)
                             <input type="submit"
                                    class="btn btn-default btn-xs"
                                    value="Удалить"
@@ -47,5 +47,9 @@
                 </tr>
             }
         </table>
+    </div>
+    <div class="panel-footer">
+        @Html.ActionLink("Добавить заказ", "Create3", null,
+            new { @class = "btn btn-default" })
     </div>
 </div>

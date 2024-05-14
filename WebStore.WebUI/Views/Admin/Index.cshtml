@@ -28,13 +28,13 @@
             {
                 <tr>
                     <td class="text-right">@item.ID_SoftWare</td>
-                    @Html.Hidden("softID", item.ID_SoftWare)
+                    @Html.Hidden("ID_SoftWare", item.ID_SoftWare)
                     <td>@Html.ActionLink(item.Name, "Edit", new { softID = item.ID_SoftWare })</td>
                     <td class="text-right">@item.Price.ToString("# руб")</td>
                     <td class="text-center">
                         @using (Html.BeginForm("Delete", "Admin"))
                         {
-                            @Html.Hidden("softID", item.ID_SoftWare)
+                            @Html.Hidden("ID_SoftWare", item.ID_SoftWare)
                             <input type="submit"
                                    class="btn btn-default btn-xs"
                                    value="Удалить"

@@ -48,6 +48,10 @@
                             {
                                 @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = 5 })
                             }
+                            else if (property.PropertyName == "LongDescription")
+                            {
+                                @Html.TextAreaFor(m => m.LongDescription, new { @class = "form-control", rows = 5 })
+                            }
                             else
                             {
                                 @Html.TextBox(property.PropertyName, null,
