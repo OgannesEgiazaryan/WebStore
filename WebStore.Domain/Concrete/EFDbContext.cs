@@ -24,5 +24,15 @@ namespace WebStore.Domain.Concrete
         
         public DbSet<Events> Event { get; set; }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<SoftWares>()
+                .HasMany(s => s.Review)
+                .WithRequired(r => r.Software   )
+                .HasForeignKey(r => r.ID_Software);
+        }
+
     }
 }

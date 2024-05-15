@@ -28,7 +28,7 @@ namespace WebStore.WebUI.Controllers
             ViewBag.SelectedCategory = category;
 
             IEnumerable<string> categories = repository.Category
-                .Select(game => game.Name)
+                .Select(cat => cat.Name)
                 .Distinct()
                 .OrderBy(x => x);
             return PartialView(categories);

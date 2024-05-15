@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -6,15 +8,115 @@
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
     <link href="~/Content/ErrorStyles.css" rel="stylesheet" />
+    <style>
+        .fixed-top {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        /* Стили для горизонтального меню */
+        .navbar-nav {
+            display: flex;
+            align-items: center;
+        }
 
+        .nav-item {
+            margin-right: 15px; /* Расстояние между элементами меню */
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        #searchTerm {
+            margin-left: auto; /* Поисковик будет выровнен по правому краю */
+        }
+
+        #searchResults {
+            position: absolute;
+            width: 100%;
+            z-index: 2000;
+            background: #fff;
+        }
+
+        .navbar-form {
+            border-right: 1px solid #ccc; /* Вертикальная черта */
+            padding-right: 15px; /* Отступ справа от черты */
+            margin-right: 15px; /* Отступ между чертой и корзиной */
+        }
+
+        .cart-summary {
+            display: inline-block; /* Для отображения в линии с поисковиком */
+            padding-left: 15px; /* Отступ слева от черты */
+        }
+
+        .product-slider, .special-offers {
+            margin-top: 20px; /* Отступ сверху для слайдера и колонки */
+        }
+
+        .special-offers {
+            background-color: #f9f9f9; /* Фон для колонки специальных предложений */
+            padding: 10px; /* Отступы внутри колонки */
+        }
+
+            .special-offers h3 {
+                margin-bottom: 15px; /* Отступ заголовка от списка товаров */
+            }
+    </style>
+    <script>
+        // JavaScript для динамического поиска (пример)
+        function search() {
+            // Ваш код для поиска
+        }
+    </script>
     <title>@ViewBag.Title</title>
 </head>
+
 <body>
-    <div class="navbar navbar-inverse" role="navigation">
-        <a class="navbar-brand" href="#">WebStore - магазин программного обеспечения</a>
-        @Html.Action("Summary", "Cart")
+    <div class="navbar navbar-inverse fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Логотип</a>
+
+            </div>
+
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">WebStore</a></li>
+                    <li><a href="#">Главная</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Каталог<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <!-- Здесь будет динамически заполняться список категорий -->
+                        </ul>
+                    </li>
+                    <li><a href="/about">О нас</a></li>
+                </ul>
+                <div class="cart-summary navbar-form navbar-right">
+                    @Html.Action("Summary", "Cart")
+                </div>
+                <form class="navbar-form" role="search">
+                    <div class="form-group">
+                        <input type="text" id="searchTerm" onkeyup="search()" class="form-control" placeholder="Поиск...">
+                    </div>
+                </form>
+
+            </div>
+        </div>
     </div>
-    <div class="row panel">
+
+
+    <div class="row panel" style="padding-top: 70px;">
         <div id="categories" class="col-xs-3">
             @Html.Action("Menu", "Nav")
         </div>
@@ -22,5 +124,12 @@
             @RenderBody()
         </div>
     </div>
+    <script>
+        // Инициализация слайдера
+        $('.product-slider').slick({
+            // Ваши настройки слайдера
+        });
+    </script>
+
 </body>
 </html>

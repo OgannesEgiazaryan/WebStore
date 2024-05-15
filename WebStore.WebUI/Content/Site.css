@@ -28,3 +28,24 @@ textarea {
     background-color: #777;
     border-color: #fff
 }
+
+/* Стили для отображения результатов поиска */
+#searchResults {
+    position: absolute;
+    z-index: 1000;
+    background-color: #fff;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 200px;
+}
+
+#searchResults li {
+        padding: 5px;
+        border-bottom: 1px solid #ddd;
+    }
+
+#searchResults li:last-child {
+            border-bottom: none;
+        }
+

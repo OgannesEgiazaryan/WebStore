@@ -1,30 +1,34 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using WebStore.Domain.Abstract;
+using WebStore.Domain.Concrete;
 
 namespace WebStore.WebUI.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        IWebRepository repository;
+        EFDbContext _context;
+
+        public HomeController(IWebRepository repo, EFDbContext context)
         {
-            return View();
+            repository = repo;
+            _context = context;
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
+        //[HttpGet]
+        //public async Task<IActionResult> Search(string term)
+        //{
+        //    var matches = _context.App
+        //        .Where(p => p.Name.Contains(term))
+        //        .ToList();
 
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
+        //    return new JsonResult(matches);
+        //}
     }
 }

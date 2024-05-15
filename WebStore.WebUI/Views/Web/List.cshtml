@@ -10,6 +10,7 @@
 @foreach (var p in @Model.App)
 {
     @Html.Partial("WebSummary", p)
+    @Html.ActionLink("Подробнее", "Details", "Web", new { softId = p.ID_SoftWare }, new { @class = "btn btn-default" })
 
 }
 

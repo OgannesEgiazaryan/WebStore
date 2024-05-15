@@ -1,0 +1,305 @@
+﻿@model WebStore.Domain.Entities.SoftWares
+@{
+    var bestOffers = ViewBag.BestOffers as List<WebStore.Domain.Entities.BestOfferViewModel>;
+    var ratingCounts = ViewBag.RatingCounts as Dictionary<int, int>;
+    int totalReviews = ViewBag.ReviewCount;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@Model.Name</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- FontAwesome CSS for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- External CSS -->
+    <link rel="stylesheet" href="~/Content/style.css">
+</head>
+<body>
+    <!--<nav class="navbar">
+        <a class="navbar-brand" href="#">
+            <img src="path/to/logo.png" alt="Logo">
+            ByteBazaar
+        </a>
+        <ul class="nav-links">
+            <li><a href="#">Главная</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Каталог<b class="caret"></b></a>
+                <ul class="dropdown-menu">-->
+                    <!-- Dynamically filled category list -->
+                <!--</ul>
+            </li>
+            <li><a href="#">О Нас</a></li>
+            <li><a href="#">Блог</a></li>
+        </ul>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-whatsapp"></i></a>
+            <a href="#"><i class="fab fa-vk"></i></a>
+            <a href="#"><i class="fab fa-telegram"></i></a>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Поиск товаров">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </div>
+        <div class="user-info">
+            <a href="#"><i class="fa fa-user"></i></a>
+            <a href="#"><i class="fa fa-heart"></i><span>0</span></a>
+            <a href="#"><i class="fa fa-shopping-cart"></i><span>1 / ₽41,300.00</span></a>
+        </div>
+    </nav>-->
+
+    <div class="container">
+        <div class="top-section">
+            <div id="carouselExampleIndicators" class="carousel slide image-section" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    @if (Model.Image1 != null)
+                    {
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    }
+                    @if (Model.Image2 != null)
+                    {
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    }
+                    @if (Model.Image3 != null)
+                    {
+                        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                    }
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="data:image/jpeg;base64,@(Model.Photo1 != null ? Convert.ToBase64String(Model.Photo1) : "")" class="d-block w-100" alt="@Model.Name">
+                    </div>
+                    @if (Model.Image1 != null)
+                    {
+                        <div class="carousel-item">
+                            <img src="data:image/jpeg;base64,@(Model.Image1 != null ? Convert.ToBase64String(Model.Image1) : "")" class="d-block w-100" alt="@Model.Name">
+                        </div>
+                    }
+                    @if (Model.Image2 != null)
+                    {
+                        <div class="carousel-item">
+                            <img src="data:image/jpeg;base64,@(Model.Image2 != null ? Convert.ToBase64String(Model.Image2) : "")" class="d-block w-100" alt="@Model.Name">
+                        </div>
+                    }
+                    @if (Model.Image3 != null)
+                    {
+                        <div class="carousel-item">
+                            <img src="data:image/jpeg;base64,@(Model.Image3 != null ? Convert.ToBase64String(Model.Image3) : "")" class="d-block w-100" alt="@Model.Name">
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="details-section">
+                <h1>@Model.Name</h1>
+                @if (ViewBag.ReviewCount > 0)
+                {
+                    <div class="rating">
+                        @{
+                            var fullStars = (int)ViewBag.AverageRating;
+                            var halfStar = ViewBag.AverageRating - fullStars >= 0.5;
+                        }
+                        @for (int i = 0; i < fullStars; i++)
+                        {
+                            <span>★</span>
+                        }
+                        @if (halfStar)
+                        {
+                            <span>☆</span>
+                        }
+                        @for (int i = fullStars + (halfStar ? 1 : 0); i < 5; i++)
+                        {
+                            <span>☆</span>
+                        }
+                        ( @ViewBag.ReviewCount отзыв(ов) )
+                    </div>
+                }
+                <div class="description">
+                    @Model.Description
+                </div>
+                <div class="price-section">₽@Model.Price</div>
+                <div class="actions-section">
+                    <input type="number" value="1" min="1">
+                    @using (Html.BeginForm("AddToCart", "Cart"))
+                    {
+                        @Html.HiddenFor(x => x.ID_SoftWare)
+                        @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                        @Html.Hidden("softId", @Model.ID_SoftWare)
+                        <input type="submit" class="btn" value="В Корзину" />
+                    }
+                </div>
+     
+                <div class="share-section">
+                    <a href="#">Поделиться:</a>
+                    <a href="#">✉️</a>
+                    <a href="#">💬</a>
+                    <a href="#">📱</a>
+                </div>
+            </div>
+        </div>
+        <div class="description-full-section">
+            <h2>Описание</h2>
+            <p>@Model.LongDescription</p>
+        </div>
+        <div class="specs-offers">
+            <div class="specs">
+                <h2>Характеристики</h2>
+                <div class="spec-item">
+                    <div><i class="fas fa-hdd"></i> Вес (Гб)</div>
+                    <div>@Model.Weight_GB</div>
+                </div>
+                <div class="spec-item">
+                    <div><i class="fas fa-desktop"></i> Операционная система</div>
+                    <div>@Model.OS</div>
+                </div>
+                <div class="spec-item">
+                    <div><i class="fas fa-memory"></i> ОЗУ (Гб)</div>
+                    <div>@Model.RAM</div>
+                </div>
+                <div class="spec-item">
+                    <div><i class="fas fa-memory"></i> Продаж</div>
+                    <div>@Model.Count_Sale</div>
+                </div>
+            </div>
+            <div class="offers">
+                <h2>Лучшие предложения</h2>
+                @foreach (var offer in bestOffers)
+                {
+                    <div class="spec-item">
+                        <div>
+                            @if (offer.Software.Photo1 != null)
+                            {
+                                <img src="data:image/jpeg;base64,@Convert.ToBase64String(offer.Software.Photo1)" alt="@offer.Software.Name" style="width: 50px; height: 50px;">
+                            }
+                            else
+                            {
+                                <img src="path/to/default-image.png" alt="@offer.Software.Name" style="width: 50px; height: 50px;">
+                            }
+                        </div>
+                        <div>@offer.Software.Name</div>
+                        <div>
+                            @{
+                                var fullStars = (int)offer.AverageRating;
+                                var halfStar = offer.AverageRating - fullStars >= 0.5;
+                            }
+                            @for (int i = 0; i < fullStars; i++)
+                            {
+                                <span>★</span>
+                            }
+                            @if (halfStar)
+                            {
+                                <span>☆</span>
+                            }
+                            @for (int i = fullStars + (halfStar ? 1 : 0); i < 5; i++)
+                            {
+                                <span>☆</span>
+                            }
+                            ( @offer.ReviewCount отзыв(ов) )
+                        </div>
+                        <div>₽@offer.Software.Price</div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="review-section">
+            <h2>Отзывы</h2>
+            <div class="review-summary">
+                <div class="average-rating">
+                    <span>@ViewBag.AverageRating</span>
+                    <div class="rating-stars">
+                        @for (int i = 0; i < (int)ViewBag.AverageRating; i++)
+                        {
+                            <span>★</span>
+                        }
+                        @for (int i = (int)ViewBag.AverageRating; i < 5; i++)
+                        {
+                            <span>☆</span>
+                        }
+                    </div>
+                    <div class="rating-count">( @ViewBag.ReviewCount отзыв(ов) )</div>
+                </div>
+                <div class="rating-distribution">
+                    @foreach (var rating in ratingCounts)
+                    {
+                        <div class="rating-bar">
+                            <span>@rating.Key ★★★★★</span>
+                            <div class="bar">
+                                @{
+                                    var percentage = totalReviews > 0 ? (double)rating.Value / totalReviews * 100 : 0;
+                                }
+                                <div class="fill" style="width: @percentage%;"></div>
+                            </div>
+                            <span>@rating.Value</span>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="review-form">
+                @using (Html.BeginForm("AddReview", "Web", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("softId", @Model.ID_SoftWare)
+                    <div>
+                        <label>Ваша оценка:</label>
+                        <div class="rating-input">
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                <input type="radio" name="rating" value="@i" id="rating-@i" />
+                                <label for="rating-@i"></label>
+                            }
+                        </div>
+                    </div>
+                    <div>
+                        <label>Ваш отзыв *</label>
+                        <textarea name="reviewText" required></textarea>
+                    </div>
+                    <div>
+                        <label>Имя *</label>
+                        <input type="text" name="userName" required />
+                    </div>
+                    <div>
+                        <label>Email *</label>
+                        <input type="email" name="userEmail" required />
+                    </div>
+                    <div>
+                        <input type="checkbox" name="saveInfo" /> Сохранить моё имя, email и адрес сайта в этом браузере для последующих моих комментариев.
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-primary">Отправить</button>
+                    </div>
+                }
+            </div>
+            <div class="review-list">
+                @foreach (var review in Model.Review.OrderByDescending(r => r.Date))
+                {
+                    <div class="review-item">
+                        <div>
+                            <strong>@review.User</strong>
+                            <span>@review.Date.ToShortDateString()</span>
+                        </div>
+                        <div class="rating">
+                            @for (int i = 0; i < review.Rating; i++)
+                            {
+                                <span>★</span>
+                            }
+                            @for (int i = review.Rating; i < 5; i++)
+                            {
+                                <span>☆</span>
+                            }
+                        </div>
+                        <div>@review.Text</div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -202,4 +202,12 @@ namespace WebStore.Domain.Entities
         public virtual ICollection<SoftWares> SoftWares { get; set; }
 
     }
+
+    public class BestOfferViewModel
+    {
+        public SoftWares Software { get; set; }
+        public double AverageRating { get; set; }
+        public int ReviewCount { get; set; }
+    }
+
 }

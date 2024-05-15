@@ -1,5 +1,11 @@
 ﻿@model WebStore.Domain.Entities.Cart
 
+<style>
+    .btn-default.navbar-btn {
+        margin-left: 20px; /* Измените это значение, чтобы увеличить отступ слева */
+    }
+</style>
+
 <div class="navbar-right">
     @Html.ActionLink("Заказать", "Index", "Cart",
     new { returnUrl = Request.Url.PathAndQuery },
@@ -11,3 +17,5 @@
     @Model.Lines.Sum(x => x.Quantity) программ,
     @Model.ComputeTotalValue().ToString("# руб")
 </div>
+
+
