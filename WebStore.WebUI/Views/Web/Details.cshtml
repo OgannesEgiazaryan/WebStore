@@ -1,5 +1,6 @@
 ﻿@model WebStore.Domain.Entities.SoftWares
 @{
+    ViewBag.HideSidebar = true;
     var bestOffers = ViewBag.BestOffers as List<WebStore.Domain.Entities.BestOfferViewModel>;
     var ratingCounts = ViewBag.RatingCounts as Dictionary<int, int>;
     int totalReviews = ViewBag.ReviewCount;
@@ -10,47 +11,14 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@Model.Name</title>
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- FontAwesome CSS for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <!-- External CSS -->
     <link rel="stylesheet" href="~/Content/style.css">
 </head>
-<body>
-    <!--<nav class="navbar">
-        <a class="navbar-brand" href="#">
-            <img src="path/to/logo.png" alt="Logo">
-            ByteBazaar
-        </a>
-        <ul class="nav-links">
-            <li><a href="#">Главная</a></li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Каталог<b class="caret"></b></a>
-                <ul class="dropdown-menu">-->
-                    <!-- Dynamically filled category list -->
-                <!--</ul>
-            </li>
-            <li><a href="#">О Нас</a></li>
-            <li><a href="#">Блог</a></li>
-        </ul>
-        <div class="social-icons">
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-whatsapp"></i></a>
-            <a href="#"><i class="fab fa-vk"></i></a>
-            <a href="#"><i class="fab fa-telegram"></i></a>
-        </div>
-        <div class="search-bar">
-            <input type="text" placeholder="Поиск товаров">
-            <button type="submit"><i class="fa fa-search"></i></button>
-        </div>
-        <div class="user-info">
-            <a href="#"><i class="fa fa-user"></i></a>
-            <a href="#"><i class="fa fa-heart"></i><span>0</span></a>
-            <a href="#"><i class="fa fa-shopping-cart"></i><span>1 / ₽41,300.00</span></a>
-        </div>
-    </nav>-->
 
+<!-- РАЗОБРАТЬСЯ И ДОБАВИТЬ КАРТУ САЙТА ИЛИ КНОПКУ НАЗАД -->
+
+<body>
     <div class="container">
         <div class="top-section">
             <div id="carouselExampleIndicators" class="carousel slide image-section" data-ride="carousel">
@@ -122,7 +90,6 @@
                 </div>
                 <div class="price-section">₽@Model.Price</div>
                 <div class="actions-section">
-                    <input type="number" value="1" min="1">
                     @using (Html.BeginForm("AddToCart", "Cart"))
                     {
                         @Html.HiddenFor(x => x.ID_SoftWare)
@@ -131,7 +98,6 @@
                         <input type="submit" class="btn" value="В Корзину" />
                     }
                 </div>
-     
                 <div class="share-section">
                     <a href="#">Поделиться:</a>
                     <a href="#">✉️</a>
@@ -297,6 +263,8 @@
         </div>
     </div>
 
+
+    <!-- РАЗОБРАТЬСЯ И ДОБАВИТЬ ПОХОЖИЕ ТОВАРЫ, ПОКА БЕЗ НИХ -->
     <!-- Bootstrap JS, Popper.js, and jQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>

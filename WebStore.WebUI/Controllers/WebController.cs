@@ -116,27 +116,27 @@ namespace WebStore.WebUI.Controllers
         //}
 
         public ActionResult Details(int softId)
-        {
-            var product = repository.App.FirstOrDefault(p => p.ID_SoftWare == softId);
-            if (product != null)
+{
+    var product = repository.App.FirstOrDefault(p => p.ID_SoftWare == softId);
+    if (product != null)
+    {
+        var bestOffers = repository.App
+            .Where(p => p.ID_Event == product.ID_Event && p.ID_SoftWare != softId)
+            .Select(p => new BestOfferViewModel
             {
-                var bestOffers = repository.App
-                    .Where(p => p.ID_Event == product.ID_Event && p.ID_SoftWare != softId)
-                    .Select(p => new BestOfferViewModel
-                    {
-                        Software = p,
-                        AverageRating = p.Review.Any() ? p.Review.Average(r => r.Rating) : 0,
-                        ReviewCount = p.Review.Count()
-                    })
-                    .ToList();
+                Software = p,
+                AverageRating = p.Review.Any() ? p.Review.Average(r => r.Rating) : 0,
+                ReviewCount = p.Review.Count()
+            })
+            .ToList();
 
-                ViewBag.BestOffers = bestOffers;
+        ViewBag.BestOffers = bestOffers;
 
-                ViewBag.ReviewCount = product.Review.Count();
-                ViewBag.AverageRating = product.Review.Any() ? product.Review.Average(r => r.Rating) : 0;
+        ViewBag.ReviewCount = product.Review.Count();
+        ViewBag.AverageRating = product.Review.Any() ? product.Review.Average(r => r.Rating) : 0;
 
-                // Calculate counts for each star rating
-                ViewBag.RatingCounts = new Dictionary<int, int>
+        // Calculate counts for each star rating
+        ViewBag.RatingCounts = new Dictionary<int, int>
         {
             { 5, product.Review.Count(r => r.Rating == 5) },
             { 4, product.Review.Count(r => r.Rating == 4) },
@@ -145,10 +145,10 @@ namespace WebStore.WebUI.Controllers
             { 1, product.Review.Count(r => r.Rating == 1) }
         };
 
-                return View(product);
-            }
-            return HttpNotFound();
-        }
+        return View(product);
+    }
+    return HttpNotFound();
+}
 
 
         [HttpPost]

@@ -21,14 +21,21 @@ namespace WebStore.WebUI.Controllers
             _context = context;
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Search(string term)
-        //{
-        //    var matches = _context.App
-        //        .Where(p => p.Name.Contains(term))
-        //        .ToList();
+        public ActionResult _Layout()
+        {
+            // You can add any logic needed to prepare the homepage view.
+            return View();
+        }
 
-        //    return new JsonResult(matches);
-        //}
+        // Optionally, add other actions as needed for other pages.
+        public ActionResult About()
+        {
+            return View();
+        }
+
+        public ActionResult Contact()
+        {
+            return View();
+        }
     }
 }

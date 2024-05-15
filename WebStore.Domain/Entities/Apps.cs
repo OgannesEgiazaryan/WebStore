@@ -210,4 +210,20 @@ namespace WebStore.Domain.Entities
         public int ReviewCount { get; set; }
     }
 
+    public class ProductDetailsViewModel
+    {
+        public SoftWares Product { get; set; }
+        public IEnumerable<BestOfferViewModel> BestOffers { get; set; }
+        public IEnumerable<BestOfferViewModel> RelatedProducts { get; set; }
+        public int ReviewCount { get; set; }
+        public double AverageRating { get; set; }
+        public Dictionary<int, int> RatingCounts { get; set; }
+    }
+
+
+    public class RelatedProductViewModel
+    {
+        public SoftWares Product { get; set; }
+        public double AverageRating { get; set; }
+    }
 }
