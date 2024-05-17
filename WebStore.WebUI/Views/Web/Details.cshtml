@@ -132,24 +132,20 @@
             </div>
             <div class="offers">
                 <h2>Лучшие предложения</h2>
-                @foreach (var offer in bestOffers)
+                @foreach (var item in bestOffers)
                 {
                     <div class="spec-item">
-                        <div>
-                            @if (offer.Software.Photo1 != null)
+                        <a href="@Url.Action("Details", "Web", new { softId = item.Software.ID_SoftWare })">
+                            @if (item.Software.Photo1 != null)
                             {
-                                <img src="data:image/jpeg;base64,@Convert.ToBase64String(offer.Software.Photo1)" alt="@offer.Software.Name" style="width: 50px; height: 50px;">
+                                <img src="@Url.Action("GetImage", "Web", new { softId = item.Software.ID_SoftWare })" class="img-thumbnail" alt="@item.Software.Name" />
                             }
-                            else
-                            {
-                                <img src="path/to/default-image.png" alt="@offer.Software.Name" style="width: 50px; height: 50px;">
-                            }
-                        </div>
-                        <div>@offer.Software.Name</div>
-                        <div>
+                            <h4>@item.Software.Name</h4>
+                        </a>
+                        <div class="rating">
                             @{
-                                var fullStars = (int)offer.AverageRating;
-                                var halfStar = offer.AverageRating - fullStars >= 0.5;
+                                var fullStars = (int)item.AverageRating;
+                                var halfStar = item.AverageRating - fullStars >= 0.5;
                             }
                             @for (int i = 0; i < fullStars; i++)
                             {
@@ -163,9 +159,8 @@
                             {
                                 <span>☆</span>
                             }
-                            ( @offer.ReviewCount отзыв(ов) )
                         </div>
-                        <div>₽@offer.Software.Price</div>
+                        <p>₽@item.Software.Price</p>
                     </div>
                 }
             </div>

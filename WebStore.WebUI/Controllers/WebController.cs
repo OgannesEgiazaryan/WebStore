@@ -78,8 +78,6 @@ namespace WebStore.WebUI.Controllers
             ViewBag.Events = repository.Event.ToList();
 
             // Получаем ID категории на основе имени категории
-            //int? event_ID = events != null ?
-            //    repository.Event.FirstOrDefault(c => c.Event_Name == events)?.Event_ID : null;
             int? event_ID = 1;
 
 
@@ -104,16 +102,6 @@ namespace WebStore.WebUI.Controllers
             };
             return View(model);
         }
-
-        //public ActionResult Details(int softId)
-        //{
-        //    var product = repository.App.FirstOrDefault(p => p.ID_SoftWare == softId);
-        //    if (product != null)
-        //    {
-        //        return View(product);
-        //    }
-        //    return HttpNotFound();
-        //}
 
         public ActionResult Details(int softId)
 {

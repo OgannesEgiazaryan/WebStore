@@ -103,11 +103,6 @@ namespace WebStore.Domain.Concrete
                     .AppendLine(shippingInfo.Name)
                     .AppendLine("Дата:")
                     .AppendLine(Date.ToString())
-                    //.AppendLine(shippingInfo.Line1)
-                    //.AppendLine(shippingInfo.Line2 ?? "")
-                    //.AppendLine(shippingInfo.Line3 ?? "")
-                    //.AppendLine(shippingInfo.City)
-                    //.AppendLine(shippingInfo.Country)
                     .AppendLine("---")
                     .AppendLine("Электронный кассовый чек:")
                     .AppendLine("ФП Д999999")
@@ -116,8 +111,6 @@ namespace WebStore.Domain.Concrete
                     .AppendLine("ИНН 777777777777")
                     .AppendLine("Спасибо за покупку!");
 
-                //.AppendFormat("Подарочная упаковка: {0}",
-                //    shippingInfo.GiftWrap ? "Да" : "Нет");
 
                 MailAddress from = new MailAddress("workcollege111222@gmail.com", "SoftClub"); //пароль к gmail *MqMHasKjdA*
                 MailAddress to = new MailAddress(shippingInfo.Line1);
@@ -133,19 +126,13 @@ namespace WebStore.Domain.Concrete
                 smtp.UseDefaultCredentials = false;
                 smtp.Credentials = new NetworkCredential(from.Address, "ygut vtsf okwn ylfu");
 
-                //MailMessage mailMessage = new MailMessage(
-                //                       emailSettings.MailFromAddress,	// От кого
-                //                       emailSettings.Line1,		// Кому
-                //                       "Новый заказ отправлен!",		// Тема
-                //                       body.ToString()); 				// Тело письма
-
                 if (emailSettings.WriteAsFile)
                 {
                     mailMessage.BodyEncoding = Encoding.UTF8;
                 }
 
-                //smtpClient.Send(mailMessage);
                 smtp.Send(mailMessage);
+
             }
         }
     }
