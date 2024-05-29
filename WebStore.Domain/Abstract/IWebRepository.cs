@@ -9,6 +9,9 @@ namespace WebStore.Domain.Abstract
 {
     public interface IWebRepository
     {
+        IQueryable<SoftWares> App1 { get; }
+        void Save();
+
         IEnumerable<SoftWares> App { get; }
         void SaveSoft(SoftWares soft);
         SoftWares DeleteSoft(int softID);

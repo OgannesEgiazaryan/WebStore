@@ -3,12 +3,24 @@ using WebStore.Domain.Entities;
 using WebStore.Domain.Abstract;
 using WebStore.Domain.Concrete;
 using System.Data.Entity;
+using System.Linq;
 
 namespace GameStore.Domain.Concrete
 {
     public class EFWebRepository : IWebRepository
     {
         EFDbContext context = new EFDbContext();
+
+
+        public IQueryable<SoftWares> App1
+        {
+            get { return context.App; }
+        }
+
+        public void Save()
+        {
+            context.SaveChanges();
+        }
 
         public IEnumerable<SoftWares> App
         {
@@ -40,6 +52,7 @@ namespace GameStore.Domain.Concrete
                     dbEntry.Image1 = software.Image1;
                     dbEntry.Image2 = software.Image2;
                     dbEntry.Image3 = software.Image3;
+                    dbEntry.Copy_Count= software.Copy_Count;
                 }
             }
             context.SaveChanges();
@@ -137,7 +150,9 @@ namespace GameStore.Domain.Concrete
         public void SaveOrder(Orders order)
         {
             if (order.Order_ID == 0)
+            {
                 context.Order.Add(order);
+            }
             else
             {
                 Orders dbEntry = context.Order.Find(order.Order_ID);
@@ -149,8 +164,18 @@ namespace GameStore.Domain.Concrete
                     dbEntry.Order_Quantity = order.Order_Quantity;
                 }
             }
+
+            // Decrement the Copy_Count for the ordered software
+            var orderedSoftware = context.App.Find(order.Order_Soft_ID);
+            if (orderedSoftware != null)
+            {
+                orderedSoftware.Copy_Count -= order.Order_Quantity;
+                orderedSoftware.Count_Sale += order.Order_Quantity;
+            }
+
             context.SaveChanges();
         }
+
 
         public Orders DeleteOrder(int orderID)
         {

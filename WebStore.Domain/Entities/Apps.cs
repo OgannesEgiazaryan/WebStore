@@ -60,7 +60,7 @@ namespace WebStore.Domain.Entities
         [ForeignKey("ID_Event")]
         public virtual Events Event { get; set; }
 
-        public byte[] Photo1 { get; set; }
+        
 
         public string Image_Mime_Type { get; set; }
 
@@ -78,7 +78,12 @@ namespace WebStore.Domain.Entities
         [Range(0, int.MaxValue, ErrorMessage = "Пожалуйста, введите положительное значение для веса")]
         public int RAM { get; set; }
 
+        [Display(Name = "Количество копий")]
+        [Required(ErrorMessage = "Пожалуйста, введите количество копий")]
+        [Range(0, int.MaxValue, ErrorMessage = "Пожалуйста, введите положительное значение для количества копий")]
+        public int Copy_Count { get; set; }
 
+        public byte[] Photo1 { get; set; }
 
         public byte[] Image1 { get; set; }
 

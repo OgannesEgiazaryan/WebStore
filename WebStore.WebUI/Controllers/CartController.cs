@@ -77,7 +77,33 @@ namespace WebStore.WebUI.Controllers
 
             if (ModelState.IsValid)
             {
+                // Check if all items have sufficient stock
+                foreach (var line in cart.Lines)
+                {
+                    var soft = repository.App.FirstOrDefault(s => s.ID_SoftWare == line.Soft.ID_SoftWare);
+                    if (soft != null && soft.Copy_Count < line.Quantity)
+                    {
+                        ModelState.AddModelError("", $"Недостаточно копий для {soft.Name}. Доступно: {soft.Copy_Count}, требуется: {line.Quantity}");
+                        return View(shippingDetails);
+                    }
+                }
+
+                // Process the order
                 orderProcessor.ProcessOrder(cart, shippingDetails);
+
+                // Decrement the Copy_Count for each item
+                foreach (var line in cart.Lines)
+                {
+                    var soft = repository.App.FirstOrDefault(s => s.ID_SoftWare == line.Soft.ID_SoftWare);
+                    if (soft != null)
+                    {
+                        soft.Copy_Count -= line.Quantity;
+                        soft.Count_Sale += line.Quantity;
+                    }
+                }
+
+                repository.Save(); // Assuming the repository has a Save method to save changes to the database
+
                 cart.Clear();
                 return View("Completed");
             }
