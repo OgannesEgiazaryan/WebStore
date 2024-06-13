@@ -13,6 +13,14 @@ namespace WebStore.WebUI
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+
+            routes.MapRoute(
+           name: "History",
+           url: "Account/History",
+           defaults: new { controller = "Account", action = "History" }
+       );
+
+
             routes.MapRoute(null,
                 "",
                 new
@@ -50,6 +58,7 @@ namespace WebStore.WebUI
             routes.MapPageRoute("Admin_Order", "admin/Admin_Order", "~/Pages/Admin/Index3.cshtml");
             routes.MapPageRoute("Admin_Review", "admin/Admin_Review", "~/Pages/Admin/Index4.cshtml");
             routes.MapPageRoute("Admin_Seller", "admin/Admin_Seller", "~/Pages/Admin/Index5.cshtml");
+            routes.MapPageRoute("Admin_Otchet", "admin/Admin_Otchet", "~/Pages/Admin/Index6.cshtml");
 
         }
     }

@@ -164,6 +164,7 @@ namespace GameStore.Domain.Concrete
                     dbEntry.Order_Soft_ID = order.Order_Soft_ID;
                     dbEntry.Order_Quantity = order.Order_Quantity;
                     dbEntry.Order_Date = DateTime.Now;
+                    dbEntry.Order_Key = order.Order_Key;
                 }
             }
 

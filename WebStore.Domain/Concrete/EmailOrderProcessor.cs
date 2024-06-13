@@ -37,20 +37,6 @@ namespace WebStore.Domain.Concrete
 
         public void ProcessOrder(Cart cart, ShippingDetails shippingInfo)
         {
-            foreach (var line in cart.Lines)
-            {
-                var order = new Orders
-                {
-                    Order_Name = shippingInfo.Name,
-                    Order_Email = shippingInfo.Line1,
-                    Order_Soft_ID = line.Soft.ID_SoftWare,
-                    Order_Quantity = line.Quantity
-                };
-
-                context.Order.Add(order);
-            }
-
-            context.SaveChanges();
 
             using (var smtpClient = new SmtpClient())
             {
@@ -74,28 +60,35 @@ namespace WebStore.Domain.Concrete
                     .AppendLine("---")
                     .AppendLine("Товары:");
 
-                Random random = new Random();
-                const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-                StringBuilder result = new StringBuilder(16);
-
-                for (int i = 0; i < 16; i++)
-                {
-                    if (i > 0 && i % 4 == 0)
-                        result.Append('-');
-                    result.Append(chars[random.Next(chars.Length)]);
-                }
-
                 foreach (var line in cart.Lines)
                 {
+                    string orderKey = GenerateRandomKey();
+
+                    var order = new Orders
+                    {
+                        Order_Name = shippingInfo.Name,
+                        Order_Email = shippingInfo.Line1,
+                        Order_Soft_ID = line.Soft.ID_SoftWare,
+                        Order_Quantity = line.Quantity,
+                        Order_Date = DateTime.Now,
+                        Order_Key = orderKey
+                    };
+
+                    context.Order.Add(order);
+
+
                     var subtotal = line.Soft.Price * line.Quantity;
                     body.AppendFormat("{0} x {1} (итого: {2:c}",
                         line.Quantity, line.Soft.Name, subtotal);
                     for (int i = 0; i < line.Quantity; i++)
                     {
-                        body.AppendLine($"\nКлюч для активации {i + 1}: {result}");
+                        body.AppendLine($"\nКлюч для активации {i + 1}: {orderKey}");
                     }
                     body.AppendLine("\n---");
                 }
+
+                context.SaveChanges();
+
                 DateTime Date = DateTime.Now;
                 body.AppendFormat("\nОбщая стоимость: {0:c}", cart.ComputeTotalValue())
                     .AppendLine("\n---")
@@ -134,6 +127,22 @@ namespace WebStore.Domain.Concrete
                 smtp.Send(mailMessage);
 
             }
+
+        }
+        private string GenerateRandomKey()
+        {
+            Random random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            StringBuilder result = new StringBuilder(16);
+
+            for (int i = 0; i < 16; i++)
+            {
+                if (i > 0 && i % 4 == 0)
+                    result.Append('-');
+                result.Append(chars[random.Next(chars.Length)]);
+            }
+
+            return result.ToString();
         }
     }
 }

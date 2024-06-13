@@ -24,6 +24,11 @@ namespace WebStore.WebUI.Controllers
             _context = context;
         }
 
+        public ViewResult WebSummary()
+        {
+            return View();
+        }
+
         public ViewResult List(string category, int page = 1)
         {
 
@@ -161,6 +166,8 @@ namespace WebStore.WebUI.Controllers
             }
             return HttpNotFound();
         }
+
+       
 
 
     }

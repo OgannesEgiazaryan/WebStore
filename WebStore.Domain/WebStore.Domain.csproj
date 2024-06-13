@@ -79,6 +79,7 @@
     <Compile Include="Concrete\EmailOrderProcessor.cs" />
     <Compile Include="Entities\Apps.cs" />
     <Compile Include="Entities\Cart.cs" />
+    <Compile Include="Entities\ShippingDetails2.cs" />
     <Compile Include="Entities\ShippingDetails.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

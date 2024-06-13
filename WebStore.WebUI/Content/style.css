@@ -1,4 +1,5 @@
 ﻿body {
+    font-size: large;
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
     margin: 0;
@@ -139,19 +140,22 @@
 
 .details-section {
     flex: 2;
+    font-size: large;
 }
 
     .details-section h1 {
-        font-size: 24px;
+        font-size: large;
         margin-bottom: 10px;
     }
 
     .details-section .rating {
+        font-size: large;
         color: gold;
         margin-bottom: 10px;
     }
 
     .details-section .description {
+        font-size: large;
         margin-bottom: 20px;
     }
 
@@ -189,10 +193,11 @@
 
 .description-full-section {
     margin-top: 20px;
+
 }
 
     .description-full-section h2 {
-        font-size: 18px;
+        font-size: 24px;
         margin-bottom: 10px;
     }
 

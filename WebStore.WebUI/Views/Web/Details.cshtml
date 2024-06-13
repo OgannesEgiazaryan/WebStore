@@ -19,7 +19,7 @@
 <!-- РАЗОБРАТЬСЯ И ДОБАВИТЬ КАРТУ САЙТА ИЛИ КНОПКУ НАЗАД -->
 
 <body>
-    <div class="container">
+    <div class="container-fluid">
         <div class="top-section">
             <div id="carouselExampleIndicators" class="carousel slide image-section" data-ride="carousel">
                 <ol class="carousel-indicators">
@@ -88,7 +88,15 @@
                 <div class="description">
                     @Model.Description
                 </div>
-                <div class="price-section">₽@Model.Price</div>
+                <div class="price-section">
+                    @if (Model.Copy_Count < 20)
+                    {
+                        var increasedPrice = Model.Price * 1.3m;
+                        <span class="text-danger" style="text-decoration: line-through;">₽@increasedPrice.ToString("# руб")</span>
+                        <br />
+                    }
+                    <span>₽@Model.Price</span>
+                </div>
                 <div class="actions-section">
                     @using (Html.BeginForm("AddToCart", "Cart"))
                     {
@@ -98,12 +106,14 @@
                         <input type="submit" class="btn" value="В Корзину" />
                     }
                 </div>
-                <div class="share-section">
-                    <a href="#">Поделиться:</a>
-                    <a href="#">✉️</a>
-                    <a href="#">💬</a>
-                    <a href="#">📱</a>
-                </div>
+                <!--
+    <div class="share-section">
+        <a href="#">Поделиться:</a>
+        <a href="#">✉️</a>
+        <a href="#">💬</a>
+        <a href="#">📱</a>
+    </div>
+        -->
             </div>
         </div>
         <div class="description-full-section">

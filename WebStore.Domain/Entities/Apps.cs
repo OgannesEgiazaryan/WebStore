@@ -160,6 +160,9 @@ namespace WebStore.Domain.Entities
 
         [ForeignKey("Order_Soft_ID")]
         public virtual SoftWares Software { get; set; }
+
+        [Display(Name = "Ключ к программе")]
+        public string Order_Key { get; set; }
     }
 
     public class Reviews

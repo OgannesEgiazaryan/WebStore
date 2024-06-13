@@ -19,13 +19,13 @@
 <body>
     <div class="navbar">
         @*<a class="navbar-brand" href="@Url.Action("_Layout", "Home")">*@
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/">
             <img src="~/Media_Content/LogoBB2.jpg" alt="Logo" />
             ByteBazaar
         </a>
         <ul class="nav-links">
             @*<li><a href="@Url.Action("_Layout", "Home")">Главная</a></li>*@
-            <li><a href="#">Главная</a></li>
+            <li><a href="/">Главная</a></li>
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Каталог<b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -78,7 +78,6 @@
                 <ul>
                     <li><a href="#">О нас</a></li>
                     <li><a href="#">Контакты</a></li>
-                    <li><a href="#">Скидки</a></li>
                     <li><a href="#">Блог</a></li>
                     <li><a href="#">FAQs</a></li>
                 </ul>
@@ -86,10 +85,8 @@
             <div class="footer-section links">
                 <h3>Магазин</h3>
                 <ul>
-                    <li><a href="#">Мой аккаунт</a></li>
-                    <li><a href="#">Каталог</a></li>
-                    <li><a href="#">Избранное</a></li>
-                    <li><a href="#">История покупок</a></li>
+                    <li><a href="/">Каталог</a></li>
+                    <li><a href="@Url.Action("History", "Account")">История покупок</a></li>
                 </ul>
             </div>
             <div class="footer-section links">

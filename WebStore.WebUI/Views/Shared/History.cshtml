@@ -1,0 +1,24 @@
+﻿@model WebStore.Domain.Entities.ShippingDetails2
+
+@{
+    ViewBag.Title = "WebStore: Получение истории покупок";
+    ViewBag.HideSidebar = true;
+}
+
+<h2>Получить историю покупко сейчас</h2>
+<p>Пожалуйста введите почту, на которую оформлялись покупки, и мы сразу отправим историю покупок!</p>
+
+@using (Html.BeginForm("SendPurchaseHistory", "Account", FormMethod.Post))
+{
+    @Html.ValidationSummary();
+    <h3>Данные</h3>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Line1)
+        @Html.TextBoxFor(m => m.Line1, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Line1)
+    </div>
+
+    <div class="text-center">
+        <input class="btn btn-primary" type="submit" value="Получить историю" />
+    </div>
+}

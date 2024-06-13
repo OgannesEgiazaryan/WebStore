@@ -57,29 +57,29 @@ namespace WebStore.WebUI.Controllers
             return View(repository.App);
         }
 
-        public ViewResult Report()
-        {
-            var model = repository.App.ToList();
-            return View(model);
-        }
+        //public ViewResult Report()
+        //{
+        //    var model = repository.App.ToList();
+        //    return View(model);
+        //}
 
-        [HttpPost]
-        public JsonResult Report(DateTime startDate, DateTime endDate)
-        {
-            var salesData = repository.Order
-                .Where(order => order.Order_Date >= startDate && order.Order_Date <= endDate)
-                .GroupBy(order => order.Order_Date.Date)
-                .Select(group => new
-                {
-                    Date = group.Key,
-                    TotalSales = group.Sum(order => order.Order_Quantity),
-                    TotalRevenue = group.Sum(order => order.Order_Quantity * order.Software.Price)
-                })
-                .OrderBy(data => data.Date)
-                .ToList();
+        //[HttpPost]
+        //public JsonResult Report(DateTime startDate, DateTime endDate)
+        //{
+        //    var salesData = repository.Order
+        //        .Where(order => order.Order_Date >= startDate && order.Order_Date <= endDate)
+        //        .GroupBy(order => order.Order_Date.Date)
+        //        .Select(group => new
+        //        {
+        //            Date = group.Key,
+        //            TotalSales = group.Sum(order => order.Order_Quantity),
+        //            TotalRevenue = group.Sum(order => order.Order_Quantity * order.Software.Price)
+        //        })
+        //        .OrderBy(data => data.Date)
+        //        .ToList();
 
-            return Json(salesData);
-        }
+        //    return Json(salesData);
+        //}
 
 
 

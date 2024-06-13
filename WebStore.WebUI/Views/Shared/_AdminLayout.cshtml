@@ -1,5 +1,8 @@
 ﻿@{
     Layout = null;
+    var action = ViewContext.RouteData.Values["action"].ToString();
+    var controller = ViewContext.RouteData.Values["controller"].ToString();
+    bool showMenu = !(controller == "Admin" && action.StartsWith("Edit") || controller == "Account" && action.StartsWith("Login"));
 }
 
 <!DOCTYPE html>
@@ -12,31 +15,38 @@
     <script src="~/Scripts/jquery-1.9.1.js"></script>
     <script src="~/Scripts/jquery.validate.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
-    <title></title>
+    <title>@ViewBag.Title</title>
 </head>
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-md-2">
-                <a href="Index" class="btn btn-primary btn-block">Управление программами</a>
-                <a href="Index1" class="btn btn-primary btn-block">Управление категориями</a>
-                <a href="Index2" class="btn btn-primary btn-block">Управление событиями</a>
-                <a href="Index3" class="btn btn-primary btn-block">Управление заказами</a>
-                <a href="Index4" class="btn btn-primary btn-block">Управление отзывами</a>
-                <a href="Index5" class="btn btn-primary btn-block">Управление продавцами</a>
-                <a href="Index6" class="btn btn-primary btn-block">Отчетность</a>
-                <!-- ДОбавить возможность работы с отчетами -->
+            @if (showMenu)
+            {
+                  <div class="col-md-2">
+                    <a href="Index" class="btn btn-primary btn-block">Управление программами</a>
+                    <a href="Index1" class="btn btn-primary btn-block">Управление категориями</a>
+                    <a href="Index2" class="btn btn-primary btn-block">Управление событиями</a>
+                    <a href="Index3" class="btn btn-primary btn-block">Управление заказами</a>
+                    <a href="Index4" class="btn btn-primary btn-block">Управление отзывами</a>
+                    <a href="Index5" class="btn btn-primary btn-block">Управление продавцами</a>
+                    <a href="Index6" class="btn btn-primary btn-block">Отчетность</a>
+                </div>
+            }
 
+              
+                <div class="col-md-10">
+                    
+                    
+                    
+                    <div class="col-md-12">
+                        
+                        @if (TempData["message"] != null)
+                        {
+                            <div class="alert alert-success">@TempData["message"]</div>
+                        }
+                        @RenderBody()
+                    </div> <!-- Закрываем col-md-10 или col-md-12 -->
+                </div>
             </div>
-            <div class="col-md-10">
-                <!-- Основное содержимое страницы -->
-                @if (TempData["message"] != null)
-                {
-                    <div class="alert alert-success">@TempData["message"]</div>
-                }
-                @RenderBody()
-            </div>
-        </div>
-    </div>
-</body>
+    </body>
 </html>
