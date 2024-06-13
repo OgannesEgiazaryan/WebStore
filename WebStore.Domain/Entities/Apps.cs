@@ -154,6 +154,10 @@ namespace WebStore.Domain.Entities
         
         public int Order_Quantity { get; set; }
 
+        [DataType(DataType.DateTime)]
+        [Display(Name = "Дата заказа")]
+        public DateTime Order_Date { get; set; }
+
         [ForeignKey("Order_Soft_ID")]
         public virtual SoftWares Software { get; set; }
     }

@@ -4,6 +4,7 @@ using WebStore.Domain.Abstract;
 using WebStore.Domain.Concrete;
 using System.Data.Entity;
 using System.Linq;
+using System;
 
 namespace GameStore.Domain.Concrete
 {
@@ -162,6 +163,7 @@ namespace GameStore.Domain.Concrete
                     dbEntry.Order_Email = order.Order_Email;
                     dbEntry.Order_Soft_ID = order.Order_Soft_ID;
                     dbEntry.Order_Quantity = order.Order_Quantity;
+                    dbEntry.Order_Date = DateTime.Now;
                 }
             }
 

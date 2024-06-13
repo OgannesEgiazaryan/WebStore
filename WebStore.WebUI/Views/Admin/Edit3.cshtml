@@ -40,6 +40,12 @@
                 @Html.EditorFor(m => m.Order_Quantity, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(m => m.Order_Quantity)
             </div>
+
+            <div class="form-group">
+                <label>@Html.DisplayNameFor(m => m.Order_Date)</label>
+                @Html.EditorFor(m => m.Order_Date, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => m.Order_Date)
+            </div>
         </div>
         <div class="panel-footer">
             <input type="submit" value="Сохранить" class="btn btn-primary" />
