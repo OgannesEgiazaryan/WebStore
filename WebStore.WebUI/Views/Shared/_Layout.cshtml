@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -7,40 +9,26 @@
     <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
     <link href="~/Content/ErrorStyles.css" rel="stylesheet" />
     <link href="~/Content/style.css" rel="stylesheet" />
-    <script>
-        // JavaScript для динамического поиска (пример)
-        function search() {
-            // Ваш код для поиска
-        }
-    </script>
     <title>@ViewBag.Title</title>
 </head>
 
 <body>
     <div class="navbar">
-        @*<a class="navbar-brand" href="@Url.Action("_Layout", "Home")">*@
-        <a class="navbar-brand" href="/">
+
+        <a class="navbar-brand" href="@Url.Action("Main", "Account")">
             <img src="~/Media_Content/LogoBB2.jpg" alt="Logo" />
             ByteBazaar
         </a>
         <ul class="nav-links">
-            @*<li><a href="@Url.Action("_Layout", "Home")">Главная</a></li>*@
-            <li><a href="/">Главная</a></li>
+            <li><a href="@Url.Action("Main", "Account")">Главная</a></li>
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Каталог<b class="caret"></b></a>
+                <a href="/">Каталог</a>
                 <ul class="dropdown-menu">
                     <!-- Dynamic Category List -->
                 </ul>
             </li>
             <li><a href="#">О Нас</a></li>
-            <li><a href="#">Блог</a></li>
         </ul>
-        @*<div class="social-icons">
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
-                <a href="#"><i class="fab fa-vk"></i></a>
-                <a href="#"><i class="fab fa-telegram"></i></a>
-            </div>*@
         <div class="search-bar">
             <input type="text" placeholder="Поиск товаров">
             <button><i class="fas fa-search"></i></button>
@@ -49,24 +37,27 @@
             @Html.Action("Summary", "Cart")
         </div>
     </div>
+    
+        <div class="row panel" style="padding-top: 70px;">
+            @if (ViewBag.HideSidebar != true)
+            {
+                <div id="categories" class="col-xs-3">
+                    @Html.Action("Menu", "Nav")
+                </div>
+                <div class="col-xs-8">
+                    @RenderBody()
+                </div>
+            }
+            else
+            {
+                <div class="col-xs-12">
+                    @RenderBody()
+                </div>
+            }
+        </div>
 
-    <div class="row panel" style="padding-top: 70px;">
-        @if (ViewBag.HideSidebar != true)
-        {
-            <div id="categories" class="col-xs-3">
-                @Html.Action("Menu", "Nav")
-            </div>
-            <div class="col-xs-8">
-                @RenderBody()
-            </div>
-        }
-        else
-        {
-            <div class="col-xs-12">
-                @RenderBody()
-            </div>
-        }
-    </div>
+        
+
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section about">
@@ -78,7 +69,6 @@
                 <ul>
                     <li><a href="#">О нас</a></li>
                     <li><a href="#">Контакты</a></li>
-                    <li><a href="#">Блог</a></li>
                     <li><a href="#">FAQs</a></li>
                 </ul>
             </div>
@@ -87,15 +77,16 @@
                 <ul>
                     <li><a href="/">Каталог</a></li>
                     <li><a href="@Url.Action("History", "Account")">История покупок</a></li>
+                    <li><a href="@Url.Action("Main", "Account")">Main</a></li>
                 </ul>
             </div>
             <div class="footer-section links">
                 <h3>Социальные сети</h3>
                 <ul>
-                    <li><a href="#">Instagram</a></li>
-                    <li><a href="#">Telegram</a></li>
-                    <li><a href="#">WhatsApp</a></li>
-                    <li><a href="#">VK</a></li>
+
+                    <li><a href="https://t.me/Alk0g0Like">Telegram</a></li>
+                    <li><a href="https://wa.me/89061555121">WhatsApp</a></li>
+                    <li><a href="https://vk.com/otecrusskoydemokratii">VK</a></li>
                 </ul>
             </div>
         </div>
@@ -108,12 +99,6 @@
             </ul>
         </div>
     </footer>
-    <script>
-        // Инициализация слайдера
-        $('.product-slider').slick({
-            // Ваши настройки слайдера
-        });
-    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

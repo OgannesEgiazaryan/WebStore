@@ -10,6 +10,7 @@ using WebStore.WebUI.Infrastructure.Abstract;
 using WebStore.WebUI.Models;
 using System.Text;
 using WebStore.Domain.Concrete;
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebStore.WebUI.Controllers
 {
@@ -55,6 +56,27 @@ namespace WebStore.WebUI.Controllers
         public ActionResult History()
         {
             return View();
+        }
+
+        //public ActionResult Main()
+        //{
+        //    return View();
+        //}
+
+        public ActionResult Main()
+        {
+            var sliderItems = _context.App.Take(5).ToList();
+            var rightColumnItems = _context.App.Where(s => s.ID_Event == 3).ToList();
+
+            // Add logging or breakpoints here to inspect sliderItems and rightColumnItems
+
+            var viewModel = new SoftsListViewModel
+            {
+                SliderItems = sliderItems,
+                RightColumnItems = rightColumnItems
+            };
+
+            return View(viewModel);
         }
 
         // Действие для отправки истории покупок на почту

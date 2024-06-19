@@ -52,36 +52,58 @@ namespace WebStore.WebUI.Controllers
             return View(repository.Seller);
         }
 
+
         public ViewResult Index6()
         {
-            return View(repository.App);
+            var allApps = repository.App.Select(app => new AppViewModel
+            {
+                ID_SoftWare = app.ID_SoftWare,
+                Name = app.Name,
+                Price = app.Price,
+                Count_Sale = app.Count_Sale,
+                LastSaleDate = null // This will be populated for recent sales only
+            }).ToList();
+
+            var totalSales = allApps.Sum(app => app.Count_Sale);
+            var totalRevenue = allApps.Sum(app => app.Price * app.Count_Sale);
+
+            var last30Days = DateTime.Now.AddDays(-30);
+            var recentOrders = repository.Order
+                                         .Where(o => o.Order_Date >= last30Days)
+                                         .GroupBy(o => o.Order_Soft_ID)
+                                         .Select(g => new
+                                         {
+                                             ID_SoftWare = g.Key,
+                                             Count_Sale = g.Count(),
+                                             LastSaleDate = g.Max(o => o.Order_Date)
+                                         })
+                                         .ToList();
+
+            var recentApps = recentOrders
+                              .Join(repository.App,
+                                    r => r.ID_SoftWare,
+                                    app => app.ID_SoftWare,
+                                    (r, app) => new AppViewModel
+                                    {
+                                        ID_SoftWare = app.ID_SoftWare,
+                                        Name = app.Name,
+                                        Price = app.Price,
+                                        Count_Sale = r.Count_Sale,
+                                        LastSaleDate = r.LastSaleDate
+                                    })
+                              .ToList();
+
+            var recentTotalSales = recentApps.Sum(app => app.Count_Sale);
+            var recentTotalRevenue = recentApps.Sum(app => app.Price * app.Count_Sale);
+
+            ViewBag.TotalSales = totalSales;
+            ViewBag.TotalRevenue = totalRevenue;
+            ViewBag.RecentTotalSales = recentTotalSales;
+            ViewBag.RecentTotalRevenue = recentTotalRevenue;
+            ViewBag.RecentApps = recentApps;
+
+            return View(allApps);
         }
-
-        //public ViewResult Report()
-        //{
-        //    var model = repository.App.ToList();
-        //    return View(model);
-        //}
-
-        //[HttpPost]
-        //public JsonResult Report(DateTime startDate, DateTime endDate)
-        //{
-        //    var salesData = repository.Order
-        //        .Where(order => order.Order_Date >= startDate && order.Order_Date <= endDate)
-        //        .GroupBy(order => order.Order_Date.Date)
-        //        .Select(group => new
-        //        {
-        //            Date = group.Key,
-        //            TotalSales = group.Sum(order => order.Order_Quantity),
-        //            TotalRevenue = group.Sum(order => order.Order_Quantity * order.Software.Price)
-        //        })
-        //        .OrderBy(data => data.Date)
-        //        .ToList();
-
-        //    return Json(salesData);
-        //}
-
-
 
         public ViewResult Edit(int softID)
         {

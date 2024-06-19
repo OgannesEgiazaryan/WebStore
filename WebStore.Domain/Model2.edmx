@@ -1,0 +1,456 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище SiteForPOModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Categorys">
+          <Key>
+            <PropertyRef Name="ID_Category" />
+          </Key>
+          <Property Name="ID_Category" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Photo" Type="varbinary(max)" />
+          <Property Name="ImageMimeType" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Events">
+          <Key>
+            <PropertyRef Name="Event_ID" />
+          </Key>
+          <Property Name="Event_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Event_Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Event_Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="Order_ID" />
+          </Key>
+          <Property Name="Order_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Order_Name" Type="nvarchar(max)" />
+          <Property Name="Order_Email" Type="nvarchar(max)" />
+          <Property Name="Order_Soft_ID" Type="int" />
+          <Property Name="Order_Quantity" Type="int" />
+          <Property Name="Order_Date" Type="datetime" />
+          <Property Name="Order_Key" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Reviews">
+          <Key>
+            <PropertyRef Name="ID_Review" />
+          </Key>
+          <Property Name="ID_Review" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Text" Type="nvarchar(max)" />
+          <Property Name="Rating" Type="int" />
+          <Property Name="ID_Software" Type="int" />
+          <Property Name="User" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Sellers">
+          <Key>
+            <PropertyRef Name="ID_Seller" />
+          </Key>
+          <Property Name="ID_Seller" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Photo" Type="varbinary(max)" />
+          <Property Name="ImageMimeType" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SoftWares">
+          <Key>
+            <PropertyRef Name="ID_SoftWare" />
+          </Key>
+          <Property Name="ID_SoftWare" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Weight_GB" Type="int" />
+          <Property Name="Price" Type="int" />
+          <Property Name="Count_Sale" Type="int" />
+          <Property Name="ID_Category" Type="int" />
+          <Property Name="ID_Seller" Type="int" />
+          <Property Name="ID_Event" Type="int" />
+          <Property Name="Photo1" Type="varbinary(max)" />
+          <Property Name="Image1" Type="varbinary(max)" />
+          <Property Name="Image2" Type="varbinary(max)" />
+          <Property Name="Image3" Type="varbinary(max)" />
+          <Property Name="Image_Mime_Type" Type="nvarchar" MaxLength="50" />
+          <Property Name="LongDescription" Type="nvarchar(max)" />
+          <Property Name="OS" Type="nvarchar" MaxLength="50" />
+          <Property Name="RAM" Type="int" />
+          <Property Name="Copy_Count" Type="int" />
+        </EntityType>
+        <Association Name="FK_Orders_ToTable">
+          <End Role="SoftWares" Type="Self.SoftWares" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SoftWares">
+              <PropertyRef Name="ID_SoftWare" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="Order_Soft_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reviews_ToTable">
+          <End Role="SoftWares" Type="Self.SoftWares" Multiplicity="0..1" />
+          <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SoftWares">
+              <PropertyRef Name="ID_SoftWare" />
+            </Principal>
+            <Dependent Role="Reviews">
+              <PropertyRef Name="ID_Software" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SoftWares_ToTable">
+          <End Role="Categorys" Type="Self.Categorys" Multiplicity="0..1" />
+          <End Role="SoftWares" Type="Self.SoftWares" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorys">
+              <PropertyRef Name="ID_Category" />
+            </Principal>
+            <Dependent Role="SoftWares">
+              <PropertyRef Name="ID_Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SoftWares_ToTable_1">
+          <End Role="Events" Type="Self.Events" Multiplicity="0..1" />
+          <End Role="SoftWares" Type="Self.SoftWares" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Events">
+              <PropertyRef Name="Event_ID" />
+            </Principal>
+            <Dependent Role="SoftWares">
+              <PropertyRef Name="ID_Event" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SoftWares_ToTable1">
+          <End Role="Sellers" Type="Self.Sellers" Multiplicity="0..1" />
+          <End Role="SoftWares" Type="Self.SoftWares" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sellers">
+              <PropertyRef Name="ID_Seller" />
+            </Principal>
+            <Dependent Role="SoftWares">
+              <PropertyRef Name="ID_Seller" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище SiteForPOModelContainer">
+          <EntitySet Name="Categorys" EntityType="Self.Categorys" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Events" EntityType="Self.Events" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sellers" EntityType="Self.Sellers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SoftWares" EntityType="Self.SoftWares" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Orders_ToTable" Association="Self.FK_Orders_ToTable">
+            <End Role="SoftWares" EntitySet="SoftWares" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reviews_ToTable" Association="Self.FK_Reviews_ToTable">
+            <End Role="SoftWares" EntitySet="SoftWares" />
+            <End Role="Reviews" EntitySet="Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SoftWares_ToTable" Association="Self.FK_SoftWares_ToTable">
+            <End Role="Categorys" EntitySet="Categorys" />
+            <End Role="SoftWares" EntitySet="SoftWares" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SoftWares_ToTable_1" Association="Self.FK_SoftWares_ToTable_1">
+            <End Role="Events" EntitySet="Events" />
+            <End Role="SoftWares" EntitySet="SoftWares" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SoftWares_ToTable1" Association="Self.FK_SoftWares_ToTable1">
+            <End Role="Sellers" EntitySet="Sellers" />
+            <End Role="SoftWares" EntitySet="SoftWares" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SiteForPOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Categorys">
+          <Key>
+            <PropertyRef Name="ID_Category" />
+          </Key>
+          <Property Name="ID_Category" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ImageMimeType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SoftWares" Relationship="Self.FK_SoftWares_ToTable" FromRole="Categorys" ToRole="SoftWares" />
+        </EntityType>
+        <EntityType Name="Events">
+          <Key>
+            <PropertyRef Name="Event_ID" />
+          </Key>
+          <Property Name="Event_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Event_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Event_Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SoftWares" Relationship="Self.FK_SoftWares_ToTable_1" FromRole="Events" ToRole="SoftWares" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="Order_ID" />
+          </Key>
+          <Property Name="Order_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Order_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Order_Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Order_Soft_ID" Type="Int32" />
+          <Property Name="Order_Quantity" Type="Int32" />
+          <Property Name="Order_Date" Type="DateTime" Precision="3" />
+          <Property Name="Order_Key" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SoftWares" Relationship="Self.FK_Orders_ToTable" FromRole="Orders" ToRole="SoftWares" />
+        </EntityType>
+        <EntityType Name="Reviews">
+          <Key>
+            <PropertyRef Name="ID_Review" />
+          </Key>
+          <Property Name="ID_Review" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Rating" Type="Int32" />
+          <Property Name="ID_Software" Type="Int32" />
+          <Property Name="User" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SoftWares" Relationship="Self.FK_Reviews_ToTable" FromRole="Reviews" ToRole="SoftWares" />
+        </EntityType>
+        <EntityType Name="Sellers">
+          <Key>
+            <PropertyRef Name="ID_Seller" />
+          </Key>
+          <Property Name="ID_Seller" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="ImageMimeType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SoftWares" Relationship="Self.FK_SoftWares_ToTable1" FromRole="Sellers" ToRole="SoftWares" />
+        </EntityType>
+        <EntityType Name="SoftWares">
+          <Key>
+            <PropertyRef Name="ID_SoftWare" />
+          </Key>
+          <Property Name="ID_SoftWare" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Weight_GB" Type="Int32" />
+          <Property Name="Price" Type="Int32" />
+          <Property Name="Count_Sale" Type="Int32" />
+          <Property Name="ID_Category" Type="Int32" />
+          <Property Name="ID_Seller" Type="Int32" />
+          <Property Name="ID_Event" Type="Int32" />
+          <Property Name="Photo1" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Image1" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Image2" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Image3" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Image_Mime_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LongDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RAM" Type="Int32" />
+          <Property Name="Copy_Count" Type="Int32" />
+          <NavigationProperty Name="Categorys" Relationship="Self.FK_SoftWares_ToTable" FromRole="SoftWares" ToRole="Categorys" />
+          <NavigationProperty Name="Events" Relationship="Self.FK_SoftWares_ToTable_1" FromRole="SoftWares" ToRole="Events" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_ToTable" FromRole="SoftWares" ToRole="Orders" />
+          <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_ToTable" FromRole="SoftWares" ToRole="Reviews" />
+          <NavigationProperty Name="Sellers" Relationship="Self.FK_SoftWares_ToTable1" FromRole="SoftWares" ToRole="Sellers" />
+        </EntityType>
+        <Association Name="FK_SoftWares_ToTable">
+          <End Role="Categorys" Type="Self.Categorys" Multiplicity="0..1" />
+          <End Role="SoftWares" Type="Self.SoftWares" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorys">
+              <PropertyRef Name="ID_Category" />
+            </Principal>
+            <Dependent Role="SoftWares">
+              <PropertyRef Name="ID_Category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SoftWares_ToTable_1">
+          <End Role="Events" Type="Self.Events" Multiplicity="0..1" />
+          <End Role="SoftWares" Type="Self.SoftWares" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Events">
+              <PropertyRef Name="Event_ID" />
+            </Principal>
+            <Dependent Role="SoftWares">
+              <PropertyRef Name="ID_Event" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_ToTable">
+          <End Role="SoftWares" Type="Self.SoftWares" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SoftWares">
+              <PropertyRef Name="ID_SoftWare" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="Order_Soft_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reviews_ToTable">
+          <End Role="SoftWares" Type="Self.SoftWares" Multiplicity="0..1" />
+          <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SoftWares">
+              <PropertyRef Name="ID_SoftWare" />
+            </Principal>
+            <Dependent Role="Reviews">
+              <PropertyRef Name="ID_Software" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SoftWares_ToTable1">
+          <End Role="Sellers" Type="Self.Sellers" Multiplicity="0..1" />
+          <End Role="SoftWares" Type="Self.SoftWares" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sellers">
+              <PropertyRef Name="ID_Seller" />
+            </Principal>
+            <Dependent Role="SoftWares">
+              <PropertyRef Name="ID_Seller" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SiteForPOEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categorys" EntityType="Self.Categorys" />
+          <EntitySet Name="Events" EntityType="Self.Events" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" />
+          <EntitySet Name="Reviews" EntityType="Self.Reviews" />
+          <EntitySet Name="Sellers" EntityType="Self.Sellers" />
+          <EntitySet Name="SoftWares" EntityType="Self.SoftWares" />
+          <AssociationSet Name="FK_SoftWares_ToTable" Association="Self.FK_SoftWares_ToTable">
+            <End Role="Categorys" EntitySet="Categorys" />
+            <End Role="SoftWares" EntitySet="SoftWares" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SoftWares_ToTable_1" Association="Self.FK_SoftWares_ToTable_1">
+            <End Role="Events" EntitySet="Events" />
+            <End Role="SoftWares" EntitySet="SoftWares" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_ToTable" Association="Self.FK_Orders_ToTable">
+            <End Role="SoftWares" EntitySet="SoftWares" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reviews_ToTable" Association="Self.FK_Reviews_ToTable">
+            <End Role="SoftWares" EntitySet="SoftWares" />
+            <End Role="Reviews" EntitySet="Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SoftWares_ToTable1" Association="Self.FK_SoftWares_ToTable1">
+            <End Role="Sellers" EntitySet="Sellers" />
+            <End Role="SoftWares" EntitySet="SoftWares" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище SiteForPOModelContainer" CdmEntityContainer="SiteForPOEntities1">
+          <EntitySetMapping Name="Categorys">
+            <EntityTypeMapping TypeName="SiteForPOModel.Categorys">
+              <MappingFragment StoreEntitySet="Categorys">
+                <ScalarProperty Name="ID_Category" ColumnName="ID_Category" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="ImageMimeType" ColumnName="ImageMimeType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="SiteForPOModel.Events">
+              <MappingFragment StoreEntitySet="Events">
+                <ScalarProperty Name="Event_ID" ColumnName="Event_ID" />
+                <ScalarProperty Name="Event_Name" ColumnName="Event_Name" />
+                <ScalarProperty Name="Event_Description" ColumnName="Event_Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="SiteForPOModel.Orders">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="Order_ID" ColumnName="Order_ID" />
+                <ScalarProperty Name="Order_Name" ColumnName="Order_Name" />
+                <ScalarProperty Name="Order_Email" ColumnName="Order_Email" />
+                <ScalarProperty Name="Order_Soft_ID" ColumnName="Order_Soft_ID" />
+                <ScalarProperty Name="Order_Quantity" ColumnName="Order_Quantity" />
+                <ScalarProperty Name="Order_Date" ColumnName="Order_Date" />
+                <ScalarProperty Name="Order_Key" ColumnName="Order_Key" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reviews">
+            <EntityTypeMapping TypeName="SiteForPOModel.Reviews">
+              <MappingFragment StoreEntitySet="Reviews">
+                <ScalarProperty Name="ID_Review" ColumnName="ID_Review" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="ID_Software" ColumnName="ID_Software" />
+                <ScalarProperty Name="User" ColumnName="User" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sellers">
+            <EntityTypeMapping TypeName="SiteForPOModel.Sellers">
+              <MappingFragment StoreEntitySet="Sellers">
+                <ScalarProperty Name="ID_Seller" ColumnName="ID_Seller" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="ImageMimeType" ColumnName="ImageMimeType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SoftWares">
+            <EntityTypeMapping TypeName="SiteForPOModel.SoftWares">
+              <MappingFragment StoreEntitySet="SoftWares">
+                <ScalarProperty Name="ID_SoftWare" ColumnName="ID_SoftWare" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Weight_GB" ColumnName="Weight_GB" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Count_Sale" ColumnName="Count_Sale" />
+                <ScalarProperty Name="ID_Category" ColumnName="ID_Category" />
+                <ScalarProperty Name="ID_Seller" ColumnName="ID_Seller" />
+                <ScalarProperty Name="ID_Event" ColumnName="ID_Event" />
+                <ScalarProperty Name="Photo1" ColumnName="Photo1" />
+                <ScalarProperty Name="Image1" ColumnName="Image1" />
+                <ScalarProperty Name="Image2" ColumnName="Image2" />
+                <ScalarProperty Name="Image3" ColumnName="Image3" />
+                <ScalarProperty Name="Image_Mime_Type" ColumnName="Image_Mime_Type" />
+                <ScalarProperty Name="LongDescription" ColumnName="LongDescription" />
+                <ScalarProperty Name="OS" ColumnName="OS" />
+                <ScalarProperty Name="RAM" ColumnName="RAM" />
+                <ScalarProperty Name="Copy_Count" ColumnName="Copy_Count" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

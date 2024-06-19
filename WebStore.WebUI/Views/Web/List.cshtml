@@ -2,7 +2,6 @@
 @using WebStore.WebUI.HtmlHelpers
 @model SoftsListViewModel
 
-
 @{
     ViewBag.Title = "Товары";
 }
@@ -10,12 +9,14 @@
 @foreach (var p in @Model.App)
 {
     @Html.Partial("WebSummary", p)
-    @Html.ActionLink("Подробнее", "Details", "Web", new { softId = p.ID_SoftWare }, new { @class = "btn btn-default" })
-
+    // Проверяем, что значение не равно 0
+    if (p.Copy_Count != 0)
+    {
+        @Html.ActionLink("Подробнее", "Details", "Web", new { softId = p.ID_SoftWare }, new { @class = "btn btn-default" })
+    }
 }
 
 <div class="btn-group pull-right">
     @Html.PageLinks(Model.PagingInfo, x => Url.Action("List",
         new { page = x, category = Model.CurrentCategory }))
 </div>
-

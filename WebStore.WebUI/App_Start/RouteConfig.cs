@@ -21,6 +21,12 @@ namespace WebStore.WebUI
        );
 
 
+            routes.MapRoute(
+       name: "Main",
+       url: "Account/Main",
+       defaults: new { controller = "Account", action = "Main" }
+   );
+
             routes.MapRoute(null,
                 "",
                 new

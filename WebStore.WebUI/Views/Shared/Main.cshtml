@@ -1,0 +1,129 @@
+﻿@model WebStore.WebUI.Models.SoftsListViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Main</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .carousel-item img {
+            height: 600px;
+            object-fit: cover;
+        }
+
+        .carousel-caption {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .list-group-item {
+            display: flex;
+            align-items: center;
+        }
+
+            .list-group-item img {
+                width: 50px;
+                height: 50px;
+                object-fit: cover;
+                margin-right: 15px;
+            }
+
+        .btn-add-to-cart {
+            background-color: #6f42c1;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-add-to-cart:hover {
+                background-color: #5a31a1;
+            }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div id="carouselExampleControls" class="carousel slide col-md-9" data-ride="carousel">
+                <div class="carousel-inner">
+                    @for (int i = 0; i < Model.SliderItems.Count(); i++)
+                    {
+                        var item = Model.SliderItems.ElementAt(i);
+                        if (item.Photo1 != null)
+                        {
+                            <div class="carousel-item @(i == 0 ? "active" : "")">
+                                <img src="data:image/jpeg;base64,@(Convert.ToBase64String(item.Photo1))" class="d-block w-100" alt="@item.Name">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>@item.Name</h5>
+                                    <p>@item.Description</p>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="carousel-item @(i == 0 ? "active" : "")">
+                                <img src="path/to/default/image.jpg" class="d-block w-100" alt="@item.Name">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>@item.Name</h5>
+                                    <p>@item.Description</p>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+            <div class="col-md-3">
+                <h4>Выгодные предложения</h4>
+                <ul class="list-group">
+                    @foreach (var item in Model.RightColumnItems)
+                    {
+                        <li class="list-group-item">
+                            <a href="@Url.Action("Details", "Web", new { softId = item.ID_SoftWare })">
+                                @if (item.Photo1 != null)
+                                {
+                                    <img src="@Url.Action("GetImage", "Web", new { softId = item.ID_SoftWare })" class="img-thumbnail" alt="@item.Name" />
+                                }
+                                <div>
+                                    <h6>@item.Name</h6>
+                                    <p>₽@item.Price.ToString("N2")</p>
+                                </div>
+                            </a>
+                            @using (Html.BeginForm("AddToCart", "Cart"))
+                            {
+                                @Html.HiddenFor(x => x.ID_SoftWare)
+                                @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                                @Html.Hidden("softId", item.ID_SoftWare)
+                                <input type="submit" class="btn btn-add-to-cart" value="В Корзину" />
+                            }
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

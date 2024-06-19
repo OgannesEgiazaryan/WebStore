@@ -238,4 +238,23 @@ namespace WebStore.Domain.Entities
         public SoftWares Product { get; set; }
         public double AverageRating { get; set; }
     }
+
+    public class AppViewModel
+    {
+        public int ID_SoftWare { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public int Count_Sale { get; set; }
+        public DateTime? LastSaleDate { get; set; }
+    }
+
+    public class SliderItem
+    {
+        public string ImageUrl { get; set; }
+        public string AltText { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public bool IsActive { get; set; }
+    }
+
 }

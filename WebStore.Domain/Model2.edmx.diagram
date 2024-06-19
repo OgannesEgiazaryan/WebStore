@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="61fc0b9258fa4c52ba57445414feff00" Name="Diagram1">
+        <EntityTypeShape EntityType="SiteForPOModel.Categorys" Width="1.5" PointX="0.5" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SiteForPOModel.Events" Width="1.5" PointX="0.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SiteForPOModel.Orders" Width="1.5" PointX="5.375" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SiteForPOModel.Reviews" Width="1.5" PointX="5.5" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SiteForPOModel.Sellers" Width="1.5" PointX="0.5" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SiteForPOModel.SoftWares" Width="1.5" PointX="3" PointY="0.5" IsExpanded="true" />
+        <AssociationConnector Association="SiteForPOModel.FK_SoftWares_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="SiteForPOModel.FK_SoftWares_ToTable_1" ManuallyRouted="false" />
+        <AssociationConnector Association="SiteForPOModel.FK_Orders_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="SiteForPOModel.FK_Reviews_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="SiteForPOModel.FK_SoftWares_ToTable1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

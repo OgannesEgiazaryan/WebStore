@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -27,6 +28,24 @@ namespace WebStore.WebUI.Controllers
         public ViewResult WebSummary()
         {
             return View();
+        }
+
+        public IActionResult Index()
+        {
+            ViewBag.HideSidebar = false;
+
+            // Пример данных для слайдера
+            ViewBag.SliderItems = new List<SliderItem>
+        {
+            new SliderItem { ImageUrl = "/images/slider1.jpg", AltText = "Slide 1", Title = "Title 1", Description = "Description 1", IsActive = true },
+            new SliderItem { ImageUrl = "/images/slider2.jpg", AltText = "Slide 2", Title = "Title 2", Description = "Description 2", IsActive = false },
+            // Добавьте остальные слайды
+        };
+
+            // Получение продуктов с ID_Event равным 1
+            ViewBag.Products = _context.App.Where(p => p.ID_Event == 1).ToList();
+
+            return (IActionResult)View();
         }
 
         public ViewResult List(string category, int page = 1)

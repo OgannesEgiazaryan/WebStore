@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebStore.Domain.Entities.SoftWares>
+﻿@model IEnumerable<WebStore.Domain.Entities.AppViewModel>
 
 @{
     ViewBag.Title = "Админ панель: Отчетность";
@@ -13,80 +13,9 @@
     }
 }
 
-<!-- Скрипт для неработающего графика СКРИПТЫ НЕПРАВИЛЬНО ЗАГРУЖАЮТСЯ
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
-
-<script>
-    $(document).ready(function() {
-        $('#dateRangeForm').on('submit', function(e) {
-            e.preventDefault();
-
-            console.log("Form submitted");
-
-            $.ajax({
-                url: 'Url.Action("Report", "Admin")',
-                type: 'POST',
-                data: $(this).serialize(),
-                success: function(data) {
-                    console.log("Data received:", data);
-
-                    if (data.length === 0) {
-                        alert("Нет данных за выбранный период.");
-                        return;
-                    }
-
-                    var dates = data.map(x => x.Date);
-                    var totalSales = data.map(x => x.TotalSales);
-                    var totalRevenue = data.map(x => x.TotalRevenue);
-
-                    var ctx = document.getElementById('salesChart').getContext('2d');
-                    new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                            labels: dates,
-                            datasets: [
-                                {
-                                    label: 'Total Sales',
-                                    data: totalSales,
-                                    borderColor: 'blue',
-                                    fill: false
-                                },
-                                {
-                                    label: 'Total Revenue',
-                                    data: totalRevenue,
-                                    borderColor: 'green',
-                                    fill: false
-                                }
-                            ]
-                        },
-                        options: {
-                            scales: {
-                                x: {
-                                    type: 'time',
-                                    time: {
-                                        unit: 'day',
-                                        tooltipFormat: 'll' // Use moment.js format for tooltips
-                                    }
-                                }
-                            }
-                        }
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error("Error:", error);
-                    alert("Ошибка при загрузке данных. Попробуйте еще раз.");
-                }
-            });
-        });
-    });
-</script>
-    --------------------------------------------------------------------------->
-
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3>Список программ</h3>
+        <h3>Список проданных программ за все время</h3>
     </div>
     <div class="panel-body">
         <table class="table table-striped table-condensed table-bordered">
@@ -123,25 +52,44 @@
     </div>
 </div>
 
-<!------------------- Не работает график СКРИПТЫ НЕПРАВИЛЬНО ЗАГРУЖАЮТСЯ
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3>График продаж</h3>
+        <h3>Список проданных программ за последние 30 дней</h3>
     </div>
     <div class="panel-body">
-        <form id="dateRangeForm">
-            <div class="form-group">
-                <label for="startDate">Начальная дата:</label>
-                <input type="date" id="startDate" name="startDate" class="form-control" required />
-            </div>
-            <div class="form-group">
-                <label for="endDate">Конечная дата:</label>
-                <input type="date" id="endDate" name="endDate" class="form-control" required />
-            </div>
-            <button type="submit" class="btn btn-primary">Показать график</button>
-        </form>
-        <canvas id="salesChart" width="400" height="200"></canvas>
+        <table class="table table-striped table-condensed table-bordered">
+            <tr>
+                <th class="text-right">ID</th>
+                <th>Название</th>
+                <th class="text-right">Цена за единицу</th>
+                <th class="text-right">Количество продаж</th>
+                <th class="text-right">Общая выручка</th>
+                <th class="text-right">Дата последней продажи</th>
+                <th class="text-right">Процент от всех продаж за 30 дней</th>
+            </tr>
+            @foreach (var item in ViewBag.RecentApps)
+            {
+                decimal itemRevenue = item.Price * item.Count_Sale;
+                decimal salesPercentage = ViewBag.RecentTotalSales > 0 ? (item.Count_Sale / (decimal)ViewBag.RecentTotalSales * 100) : 0;
+
+                <tr>
+                    <td class="text-right">@item.ID_SoftWare</td>
+                    <td class="text-right">@item.Name</td>    
+                    <td class="text-right">@item.Price.ToString("# руб")</td>
+                    <td class="text-right">@item.Count_Sale</td>
+                    <td class="text-right">@itemRevenue.ToString("# руб")</td>
+                    <td class="text-right">@item.LastSaleDate</td>
+                    <td class="text-right">@salesPercentage.ToString("F2")%</td>
+                </tr>
+            }
+            <tr>
+                <th colspan="3" class="text-right">Итого</th>
+                <th class="text-right">@ViewBag.RecentTotalSales</th>
+                <th class="text-right">@ViewBag.RecentTotalRevenue.ToString("# руб")</th>
+                <th class="text-right"></th>
+                <th class="text-right">100%</th>
+            </tr>
+        </table>
     </div>
 </div>
-   -------------------------------------------------------------------->

@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebStore.Domain.Abstract;
 using WebStore.Domain.Concrete;
+using WebStore.Domain.Entities;
 
 namespace WebStore.WebUI.Controllers
 {
@@ -20,6 +21,9 @@ namespace WebStore.WebUI.Controllers
             repository = repo;
             _context = context;
         }
+
+       
+
 
         public ActionResult _Layout()
         {

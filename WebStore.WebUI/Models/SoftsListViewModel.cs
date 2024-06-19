@@ -12,5 +12,11 @@ namespace WebStore.WebUI.Models
         public IEnumerable<Categorys> Categorys { get; set; }
         public PagingInfo PagingInfo { get; set; }
         public string CurrentCategory { get; set; }
+
+        public IEnumerable<SoftWares> SliderItems { get; set; }
+        public IEnumerable<SoftWares> RightColumnItems { get; set; }
+
+        public int ID_SoftWare { get; set; }
+
     }
 }
