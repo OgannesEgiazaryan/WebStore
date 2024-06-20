@@ -3,26 +3,33 @@
 @{
     ViewBag.Title = "WebStore: форма заказа";
     ViewBag.HideSidebar = true;
-
 }
+<style>
+ 
 
-<h2>Оформить заказ сейчас</h2>
-<p>Пожалуйста введи ваши контактные данные, и мы сразу отправим товар!</p>
-
+    .bank-card-image {
+        float: right; /* Выравнивание картинки справа */
+        margin-left: 20px; /* Отступ слева от картинки */
+    }
+</style>
+<h2 style="margin-left: 50px;">Оформить заказ сейчас</h2>
+<p style="margin-left: 50px;">Пожалуйста введите ваши контактные данные, и мы сразу отправим товар!</p>
 
 @using (Html.BeginForm())
 {
     @Html.ValidationSummary();
+
+<div class="form-container" style="width: 70%; margin-left: 50px;">
     <h3>Данные</h3>
     <div class="form-group">
         <label>Ваше имя:</label>
         @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
     </div>
 
-    <h3>Адрес доставки</h3>
-    foreach (var property in ViewData.ModelMetadata.Properties)
+    <h3>Адрес доставки:</h3>
+    @foreach (var property in ViewData.ModelMetadata.Properties)
     {
-        if (property.PropertyName != "Name" && property.PropertyName != "GiftWrap")
+        if (property.PropertyName != "Name" && property.PropertyName != "CardNumber" && property.PropertyName != "ExpiryDate" && property.PropertyName != "CVV")
         {
             <div class="form-group">
                 <label>@(property.DisplayName ?? property.PropertyName)</label>
@@ -31,15 +38,25 @@
         }
     }
 
-    @*<h3>Опции</h3>
-    <div class="checkbox">
-        <label>
-            @Html.EditorFor(x => x.GiftWrap)
-            Использовать подарочную упаковку?
-        </label>
-    </div>*@
+    <h3>Данные банковской карты:</h3>
+    <img src="~/Media_Content/NVIDIA_Share_YA3DuigsRL.png" alt="Иконка банковской карты" class="bank-card-image" style="position: absolute; left: 77%; top: 65%;" />
+
+    @foreach (var property in ViewData.ModelMetadata.Properties)
+    {
+        if (property.PropertyName == "CardNumber" || property.PropertyName == "ExpiryDate" || property.PropertyName == "CVV")
+        {
+            <div class="form-group">
+                <label>@(property.DisplayName ?? property.PropertyName)</label>
+                @Html.TextBox(property.PropertyName, null, new { @class = "form-control" })
+            </div>
+
+        }
+    }
+
+
 
     <div class="text-center">
         <input class="btn btn-primary" type="submit" value="Обработать заказ" />
     </div>
+</div>
 }

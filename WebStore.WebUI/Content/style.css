@@ -3,7 +3,7 @@
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
     margin: 0;
-    padding-top: 70px; /* Ensure content does not hide under fixed navbar */
+    padding-top: 70px; 
 }
 
 .navbar {
@@ -230,6 +230,10 @@
         margin-right: 10px;
     }
 
+    .rating {
+        margin-left: 100px;
+    }
+
 .review-section {
     margin-top: 40px;
 }
@@ -359,6 +363,7 @@
 
 .rating-input {
     display: flex;
+    flex-direction: row-reverse;
     align-items: center;
 }
 
@@ -536,3 +541,4 @@
         border-radius: 5px;
         cursor: pointer;
     }
+

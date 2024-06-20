@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="~/Content/style.css">
+
 </head>
 
 <!-- РАЗОБРАТЬСЯ И ДОБАВИТЬ КАРТУ САЙТА ИЛИ КНОПКУ НАЗАД -->
@@ -22,43 +23,10 @@
     <div class="container-fluid">
         <div class="top-section">
             <div id="carouselExampleIndicators" class="carousel slide image-section" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                    @if (Model.Image1 != null)
-                    {
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                    }
-                    @if (Model.Image2 != null)
-                    {
-                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                    }
-                    @if (Model.Image3 != null)
-                    {
-                        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-                    }
-                </ol>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <img src="data:image/jpeg;base64,@(Model.Photo1 != null ? Convert.ToBase64String(Model.Photo1) : "")" class="d-block w-100" alt="@Model.Name">
                     </div>
-                    @if (Model.Image1 != null)
-                    {
-                        <div class="carousel-item">
-                            <img src="data:image/jpeg;base64,@(Model.Image1 != null ? Convert.ToBase64String(Model.Image1) : "")" class="d-block w-100" alt="@Model.Name">
-                        </div>
-                    }
-                    @if (Model.Image2 != null)
-                    {
-                        <div class="carousel-item">
-                            <img src="data:image/jpeg;base64,@(Model.Image2 != null ? Convert.ToBase64String(Model.Image2) : "")" class="d-block w-100" alt="@Model.Name">
-                        </div>
-                    }
-                    @if (Model.Image3 != null)
-                    {
-                        <div class="carousel-item">
-                            <img src="data:image/jpeg;base64,@(Model.Image3 != null ? Convert.ToBase64String(Model.Image3) : "")" class="d-block w-100" alt="@Model.Name">
-                        </div>
-                    }
                 </div>
             </div>
             <div class="details-section">
@@ -97,13 +65,13 @@
                     }
                     <span>₽@Model.Price</span>
                 </div>
-                <div class="actions-section">
+                <div class="actions-section" >
                     @using (Html.BeginForm("AddToCart", "Cart"))
                     {
                         @Html.HiddenFor(x => x.ID_SoftWare)
                         @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
                         @Html.Hidden("softId", @Model.ID_SoftWare)
-                        <input type="submit" class="btn" value="В Корзину" />
+                        <input type="submit" class="btn" value="В Корзину" style="padding: 30px, 40px; font-size: large;" />
                     }
                 </div>
                 <!--
@@ -144,15 +112,12 @@
                 <h2>Лучшие предложения</h2>
                 @foreach (var item in bestOffers)
                 {
-                    <div class="spec-item">
+                    <div class="spec-item" style="display: grid; grid-template-columns: 3fr 4fr 1fr;">
                         <a href="@Url.Action("Details", "Web", new { softId = item.Software.ID_SoftWare })">
-                            @if (item.Software.Photo1 != null)
-                            {
-                                <img src="@Url.Action("GetImage", "Web", new { softId = item.Software.ID_SoftWare })" class="img-thumbnail" alt="@item.Software.Name" />
-                            }
+                      
                             <h4>@item.Software.Name</h4>
                         </a>
-                        <div class="rating">
+                        <div class="rating" style="margin-left: 20px;">
                             @{
                                 var fullStars = (int)item.AverageRating;
                                 var halfStar = item.AverageRating - fullStars >= 0.5;
@@ -215,8 +180,8 @@
                     @Html.Hidden("softId", @Model.ID_SoftWare)
                     <div>
                         <label>Ваша оценка:</label>
-                        <div class="rating-input">
-                            @for (int i = 1; i <= 5; i++)
+                        <div class="rating-input" style="flex-direction: row-reverse; margin-right: 1730px;">
+                            @for (int i = 5; i >= 1; i--)
                             {
                                 <input type="radio" name="rating" value="@i" id="rating-@i" />
                                 <label for="rating-@i"></label>
@@ -234,9 +199,6 @@
                     <div>
                         <label>Email *</label>
                         <input type="email" name="userEmail" required />
-                    </div>
-                    <div>
-                        <input type="checkbox" name="saveInfo" /> Сохранить моё имя, email и адрес сайта в этом браузере для последующих моих комментариев.
                     </div>
                     <div>
                         <button type="submit" class="btn btn-primary">Отправить</button>

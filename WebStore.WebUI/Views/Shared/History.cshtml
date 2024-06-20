@@ -5,14 +5,14 @@
     ViewBag.HideSidebar = true;
 }
 
-<h2>Получить историю покупко сейчас</h2>
-<p>Пожалуйста введите почту, на которую оформлялись покупки, и мы сразу отправим историю покупок!</p>
+<h2 style="margin-left: 50px;">Получить историю покупко сейчас</h2>
+<p style="margin-left: 50px;">Пожалуйста введите почту, на которую оформлялись покупки, и мы сразу отправим историю покупок!</p>
 
 @using (Html.BeginForm("SendPurchaseHistory", "Account", FormMethod.Post))
 {
     @Html.ValidationSummary();
-    <h3>Данные</h3>
-    <div class="form-group">
+    <h3 style="margin-left: 50px;">Данные</h3>
+    <div class="form-group " style="margin-left: 50px;">
         @Html.LabelFor(m => m.Line1)
         @Html.TextBoxFor(m => m.Line1, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Line1)

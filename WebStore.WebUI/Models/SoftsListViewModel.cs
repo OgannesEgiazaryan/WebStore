@@ -15,6 +15,8 @@ namespace WebStore.WebUI.Models
 
         public IEnumerable<SoftWares> SliderItems { get; set; }
         public IEnumerable<SoftWares> RightColumnItems { get; set; }
+        public IEnumerable<SoftWares> TopSelles { get; set; }
+        public IEnumerable<SoftWares> TwoBlocks { get; set; }
 
         public int ID_SoftWare { get; set; }
 

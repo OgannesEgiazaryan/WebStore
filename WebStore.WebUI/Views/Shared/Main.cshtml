@@ -7,16 +7,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Main</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="~/Content/ErrorStyles.css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <title>@ViewBag.Title</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
         body {
             background-color: #f8f9fa;
+            padding: 0px;
+        }
+
+        .container {
+            width: 100%; /* Устанавливаем ширину контейнера равной 100% ширины экрана */
+            max-width: 95%; /* Убираем ограничение максимальной ширины, если оно было */
+            padding: 0; /* Убираем внутренние отступы, если они есть */
+            margin: 0 auto; /* Центрируем контейнер, если это необходимо */
+        }
+
+        .carousel-container {
+            width: 100%;
+            max-width: 1800px; /* Adjust as needed */
+            margin: auto;
         }
 
         .carousel-item img {
-            height: 600px;
+            height: 800px; /* Adjust height as needed */
             object-fit: cover;
         }
 
@@ -27,7 +46,7 @@
         }
 
         .list-group-item {
-            display: flex;
+            display: grid;
             align-items: center;
         }
 
@@ -44,7 +63,7 @@
             border: none;
             border-radius: 25px;
             padding: 10px 20px;
-            font-size: 16px;
+            font-size: 10px;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
@@ -52,15 +71,112 @@
             .btn-add-to-cart:hover {
                 background-color: #5a31a1;
             }
+
+        .block {
+            border: 1px solid #000;
+            border-radius: 10px;
+            width: 150px;
+            height: 150px;
+            margin: 10px;
+            display: flex;
+            background-size: cover;
+            background-position: center;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: transform 0.3s ease;
+            color: white;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            position: relative;
+        }
+
+            .block:hover {
+                transform: scale(1.1);
+                cursor: pointer;
+            }
+
+            .block a {
+                color: white;
+                text-decoration: none;
+                position: relative;
+                z-index: 1;
+            }
+
+            .block::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+                z-index: 0;
+            }
+
+        .btn-primary {
+            background-color: #6f42c1; /* фиолетовый цвет */
+            border-color: #6f42c1; /* цвет рамки */
+            color: #fff; /* белый цвет текста */
+            transition: background-color 0.3s ease; /* плавное изменение цвета фона */
+        }
+
+            .btn-primary:hover {
+                background-color: #5a3ac5; /* затемненный фиолетовый цвет при наведении */
+                border-color: #5a3ac5; /* изменение цвета рамки при наведении */
+            }
+
+        .product-card {
+            position: relative;
+            width: 48%;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+            .product-card img {
+                width: 100%;
+                height: auto;
+            }
+
+            .product-card:hover {
+                transform: scale(1.1);
+            }
+
+        .product-info {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: white;
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
+    <div class="navbar">
+        <a class="navbar-brand" href="@Url.Action("Main", "Account")" style="font-size: large;">
+            <img src="~/Media_Content/LogoBB2.jpg" alt="Logo" />
+            ByteBazaar
+        </a>
+        <ul class="nav-links">
+            <li><a href="@Url.Action("Main", "Account")">Главная</a></li>
+            <li class="dropdown">
+                <a href="/">Каталог</a>
+
+            </li>
+   
+        </ul>
+        <div class="user-info" style="font-size: large;">
+            @Html.Action("Summary", "Cart")
+        </div>
+    </div>
+
     <div class="container mt-5">
         <div class="row">
-            <div id="carouselExampleControls" class="carousel slide col-md-9" data-ride="carousel">
+            <div id="carouselExampleControls" class="carousel slide col-md-9 carousel-container" data-ride="carousel">
                 <div class="carousel-inner">
                     @for (int i = 0; i < Model.SliderItems.Count(); i++)
                     {
@@ -70,8 +186,10 @@
                             <div class="carousel-item @(i == 0 ? "active" : "")">
                                 <img src="data:image/jpeg;base64,@(Convert.ToBase64String(item.Photo1))" class="d-block w-100" alt="@item.Name">
                                 <div class="carousel-caption d-none d-md-block">
-                                    <h5>@item.Name</h5>
-                                    <p>@item.Description</p>
+                                    <a href="@Url.Action("Details", "Web", new { softId = item.ID_SoftWare })">
+                                        <h5 style="font-size: 2.25rem;">@item.Name</h5>
+                                    </a>
+                                    <p style="font-size:medium;">@item.Description</p>
                                 </div>
                             </div>
                         }
@@ -97,8 +215,8 @@
                 </a>
             </div>
             <div class="col-md-3">
-                <h4>Выгодные предложения</h4>
-                <ul class="list-group">
+                <h4 style="font-style: italic; font-size: 2.5rem; font-weight: 600;">Выгодные предложения</h4>
+                <ul class="list-group" style="display: grid;">
                     @foreach (var item in Model.RightColumnItems)
                     {
                         <li class="list-group-item">
@@ -108,8 +226,8 @@
                                     <img src="@Url.Action("GetImage", "Web", new { softId = item.ID_SoftWare })" class="img-thumbnail" alt="@item.Name" />
                                 }
                                 <div>
-                                    <h6>@item.Name</h6>
-                                    <p>₽@item.Price.ToString("N2")</p>
+                                    <h6 style="font-size: 2rem;">@item.Name</h6>
+                                    <p style="font-size: 20px;">₽@item.Price.ToString("N2")</p>
                                 </div>
                             </a>
                             @using (Html.BeginForm("AddToCart", "Cart"))
@@ -125,5 +243,132 @@
             </div>
         </div>
     </div>
+
+    <div class="container" style="display: flex; flex-direction: row; flex-wrap: nowrap; justify-content: center; align-items: center; margin-top: 30px; font-size:large">
+        <div class="block" style="background-image: url(/Media_Content/2818038.png)"><a href="/3D%20моделирование">3D Моделирование</a></div>
+        <div class="block" style="background-image: url(/Media_Content/1905446.png)"><a href="/Антивирусы">Антивирусы</a></div>
+        <div class="block" style="background-image: url('/Media_Content/images (3).png')"><a href="/Аудиоредакторы">Аудиоредакторы</a></div>
+        <div class="block" style="background-image: url(/Media_Content/6979672.png)"><a href="/Видеоредакторы">Видеоредакторы</a></div>
+        <div class="block" style="background-image: url(/Media_Content/1056985.png)"><a href="/Графические%20редакторы">Графические редакторы</a></div>
+        <div class="block" style="background-image: url(/Media_Content/4502166.png)"><a href="/Дизайн%20интерьеров">Дизайн интерьеров</a></div>
+        <div class="block" style="background-image: url('/Media_Content/images (2).png')"><a href="/Игры">Игры</a></div>
+        <div class="block" style="background-image: url(/Media_Content/MojOfis_Standartnyj.png)"><a href="/Офисные%20приложения1">Офисные приложения</a></div>
+        <div class="block" style="background-image: url(/Media_Content/2133111.png)"><a href="/Разработка%20ПО">Разработка ПО</a></div>
+        <div class="block" style="background-image: url(/Media_Content/868784.png)"><a href="/Системные%20утилиты">Системные утилиты</a></div>
+    </div>
+
+    <div class="col-md-12" style="margin-top: 30px;">
+        <h4 style="font-style: italic; font-size: 2.5rem; font-weight: 600;">Топ продаж<a class="btn btn-primary btn-lg" style="text-align: right; margin-left: 50px; background-color: #6f42c1; border-color: #6f42c1; color: #fff; transition: background-color 0.3s ease;" href="/">Посмотреть все</a></h4>
+
+        <div class="list-group" style="display: inline-flex; flex-direction: row;">
+            @foreach (var item in Model.TopSelles)
+            {
+                <div class="list-group-item" style="flex: 1; margin: 5px;">
+                    <a href="@Url.Action("Details", "Web", new { softId = item.ID_SoftWare })" style="display: flex; flex-direction: column; align-items: center;">
+                        @if (item.Photo1 != null)
+                        {
+                            <img src="@Url.Action("GetImage", "Web", new { softId = item.ID_SoftWare })" class="img-thumbnail" alt="@item.Name" style="max-width: 200px; width: 200px; height: 150px; position: relative; left: 4%;" />
+                        }
+                        <div>
+                            <h6 style="font-size: 2rem;">@item.Name</h6>
+                            <p style="font-size: 20px;">₽@item.Price.ToString("N2")</p>
+                        </div>
+                    </a>
+                    @using (Html.BeginForm("AddToCart", "Cart"))
+                    {
+                        @Html.HiddenFor(x => x.ID_SoftWare)
+                        @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                        @Html.Hidden("softId", item.ID_SoftWare)
+                        <input type="submit" class="btn btn-add-to-cart" value="В Корзину" style="font-size: large; margin-left: 40px;" />
+                    }
+                </div>
+            }
+        </div>
+    </div>
+
+
+    <div class="software-container" style="display: flex; margin-top: 30px;">
+
+
+        @for (int i = 0; i < Model.TwoBlocks.Count(); i++)
+        {
+            var item = Model.TwoBlocks.ElementAt(i);
+            if (item.Photo1 != null)
+            {
+                <div class="product-card @(i == 0 ? "active" : "")" style="position: relative; margin-right: 100px; margin-left: 50px;">
+                    <img src="data:image/jpeg;base64,@(Convert.ToBase64String(item.Photo1))" class="d-block w-100" alt="@item.Name">
+                    <div class="carousel-caption d-none d-md-block">
+                        <a href="@Url.Action("Details", "Web", new { softId = item.ID_SoftWare })">
+                            <h5 style="font-size: 2.25rem;">@item.Name</h5>
+                        </a>
+                        <p style="font-size:medium;">@item.Description</p>
+                    </div>
+                    @using (Html.BeginForm("AddToCart", "Cart"))
+                    {
+                        @Html.HiddenFor(x => x.ID_SoftWare)
+                        @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                        @Html.Hidden("softId", item.ID_SoftWare)
+                        <input type="submit" class="btn btn-add-to-cart" value="В Корзину" style="font-size: large; position: absolute; top: 95%; left: 50%; transform: translate(-50%, -50%); z-index: 10;" />
+                    }
+                </div>
+
+            }
+            else
+            {
+                <div class="carousel-item @(i == 0 ? "active" : "")">
+                    <img src="path/to/default/image.jpg" class="d-block w-100" alt="@item.Name">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>@item.Name</h5>
+                        <p>@item.Description</p>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+
+
+
+
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h2><img src="~/Media_Content/LogoBB2.jpg" alt="Logo" /> ByteBazaar</h2>
+                <p>Наш онлайн магазин программного обеспечения стал надежным местом для всех пользователей ПК</p>
+            </div>
+            <div class="footer-section links">
+                <h3>Полезные ссылки</h3>
+                <ul>
+                    <li><a href="#">О нас</a></li>
+                    <li><a href="#">Контакты</a></li>
+                    <li><a href="#">FAQs</a></li>
+                </ul>
+            </div>
+            <div class="footer-section links">
+                <h3>Магазин</h3>
+                <ul>
+                    <li><a href="/">Каталог</a></li>
+                    <li><a href="@Url.Action("History", "Account")">История покупок</a></li>
+                    <li><a href="@Url.Action("Main", "Account")">Main</a></li>
+                </ul>
+            </div>
+            <div class="footer-section links">
+                <h3>Социальные сети</h3>
+                <ul>
+                    <li><a href="https://t.me/Alk0g0Like">Telegram</a></li>
+                    <li><a href="https://wa.me/89061555121">WhatsApp</a></li>
+                    <li><a href="https://vk.com/otecrusskoydemokratii">VK</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Все права защищены авторским правом</p>
+            <ul>
+                <li><a href="#">Политика Конфиденциальности</a></li>
+
+            </ul>
+        </div>
+    </footer>
 </body>
 </html>

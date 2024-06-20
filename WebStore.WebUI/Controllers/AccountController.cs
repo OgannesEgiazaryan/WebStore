@@ -58,22 +58,24 @@ namespace WebStore.WebUI.Controllers
             return View();
         }
 
-        //public ActionResult Main()
-        //{
-        //    return View();
-        //}
+
 
         public ActionResult Main()
         {
             var sliderItems = _context.App.Take(5).ToList();
             var rightColumnItems = _context.App.Where(s => s.ID_Event == 3).ToList();
+            var topSelles = _context.App.Where(t => t.ID_Event == 4).ToList();
+            //var twoBlock = _context.App.Take(2).ToList();
+            var twoBlock = _context.App.OrderByDescending(t => t.ID_SoftWare).Take(2).ToList();
 
             // Add logging or breakpoints here to inspect sliderItems and rightColumnItems
 
             var viewModel = new SoftsListViewModel
             {
                 SliderItems = sliderItems,
-                RightColumnItems = rightColumnItems
+                RightColumnItems = rightColumnItems,
+                TopSelles = topSelles,
+                TwoBlocks = twoBlock
             };
 
             return View(viewModel);

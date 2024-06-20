@@ -30,23 +30,6 @@ namespace WebStore.WebUI.Controllers
             return View();
         }
 
-        public IActionResult Index()
-        {
-            ViewBag.HideSidebar = false;
-
-            // Пример данных для слайдера
-            ViewBag.SliderItems = new List<SliderItem>
-        {
-            new SliderItem { ImageUrl = "/images/slider1.jpg", AltText = "Slide 1", Title = "Title 1", Description = "Description 1", IsActive = true },
-            new SliderItem { ImageUrl = "/images/slider2.jpg", AltText = "Slide 2", Title = "Title 2", Description = "Description 2", IsActive = false },
-            // Добавьте остальные слайды
-        };
-
-            // Получение продуктов с ID_Event равным 1
-            ViewBag.Products = _context.App.Where(p => p.ID_Event == 1).ToList();
-
-            return (IActionResult)View();
-        }
 
         public ViewResult List(string category, int page = 1)
         {
@@ -95,6 +78,8 @@ namespace WebStore.WebUI.Controllers
                 return null;
             }
         }
+
+       
 
         public ViewResult List1(string events, int page = 1)
         {
@@ -145,9 +130,8 @@ namespace WebStore.WebUI.Controllers
         ViewBag.BestOffers = bestOffers;
 
         ViewBag.ReviewCount = product.Review.Count();
-        ViewBag.AverageRating = product.Review.Any() ? product.Review.Average(r => r.Rating) : 0;
+        ViewBag.AverageRating = product.Review.Any() ? Math.Round(product.Review.Average(r => r.Rating), 1) : 0;
 
-        // Calculate counts for each star rating
         ViewBag.RatingCounts = new Dictionary<int, int>
         {
             { 5, product.Review.Count(r => r.Rating == 5) },

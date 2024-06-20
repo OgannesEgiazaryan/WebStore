@@ -225,8 +225,19 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Media_Content\1056985.png" />
+    <Content Include="Media_Content\1905446.png" />
+    <Content Include="Media_Content\2133111.png" />
+    <Content Include="Media_Content\2818038.png" />
+    <Content Include="Media_Content\4502166.png" />
+    <Content Include="Media_Content\6979672.png" />
+    <Content Include="Media_Content\868784.png" />
+    <Content Include="Media_Content\images %282%29.png" />
+    <Content Include="Media_Content\images %283%29.png" />
     <Content Include="Media_Content\LogoBB.png" />
     <Content Include="Media_Content\LogoBB2.jpg" />
+    <Content Include="Media_Content\MojOfis_Standartnyj.png" />
+    <Content Include="Media_Content\NVIDIA_Share_YA3DuigsRL.png" />
     <Content Include="Media_Content\Windows11.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -287,6 +298,7 @@
     <Content Include="Scripts\moment-with-locales.min.js.map" />
     <Content Include="Views\Shared\History.cshtml" />
     <Content Include="Views\Shared\Main.cshtml" />
+    <Content Include="Views\Web\Privacy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -50,9 +50,6 @@ namespace GameStore.Domain.Concrete
                     dbEntry.LongDescription = software.LongDescription;
                     dbEntry.OS = software.OS;
                     dbEntry.RAM = software.RAM;
-                    dbEntry.Image1 = software.Image1;
-                    dbEntry.Image2 = software.Image2;
-                    dbEntry.Image3 = software.Image3;
                     dbEntry.Copy_Count= software.Copy_Count;
                 }
             }

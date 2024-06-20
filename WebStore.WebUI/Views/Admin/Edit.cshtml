@@ -65,54 +65,35 @@
                         break;
                 }
             }
-        <div class="form-group">
-            <div style="position:relative;">
-                <label>Картинка</label>
-                <a class='btn' href='javascript:;'>
-                    Выберите файл...
-                    <input type="file" name="Image" size="40"
-                           style="position:absolute;z-index:2;top:0;
+            <div class="form-group">
+                <div style="position:relative;">
+                    <label>Картинка</label>
+                    <a class='btn' href='javascript:;'>
+                        Выберите файл...
+                        <input type="file" name="Image" size="40"
+                               style="position:absolute;z-index:2;top:0;
                                 left:0;filter: alpha(opacity=0); opacity:0;
                                 background-color:transparent;color:transparent;"
-                           onchange='$("#upload-file-info").html($(this).val());'>
-                </a>
-                <span class='label label-info' id="upload-file-info"></span>
-            </div>
-            @if (Model.Photo1 == null)
-            {
-                <div class="form-control-static">Нет картинки</div>
-            }
-            else
-            {
-                @Html.Hidden("softId", @Model.ID_SoftWare)
-
-                <img class="img-thumbnail" width="150" height="150"
-                     src="@Url.Action("GetImage", "Web",
-                        new { softId = Model.ID_SoftWare })" />
-            }
-
-            @for (int i = 1; i <= 3; i++)
-            {
-                <div class="form-group">
-                    <label>Картинка @i</label>
-                    <input type="file" name="Image@i" style="margin-bottom: 10px;" />
-                    @if (Model.GetType().GetProperty($"Image{i}")?.GetValue(Model) == null)
-                    {
-                        <div class="form-control-static">Нет картинки</div>
-                    }
-                    else
-                    {
-                        @Html.Hidden("softId", @Model.ID_SoftWare)
-
-                        string propName = $"Image{i}";
-                        @Html.Hidden(propName, Model.GetType().GetProperty(propName)?.GetValue(Model))
-                        <img class="img-thumbnail" width="150" height="150"
-                             src="@Url.Action("GetImage", "Web",
-                            new { softId = Model.ID_SoftWare, imageNumber = i })" />
-                    }
+                               onchange='$("#upload-file-info").html($(this).val());'>
+                    </a>
+                    <span class='label label-info' id="upload-file-info"></span>
                 </div>
-            }
-        </div>
+                @if (Model.Photo1 == null)
+                {
+                    <div class="form-control-static">Нет картинки</div>
+                }
+                else
+                {
+                    @Html.Hidden("softId", @Model.ID_SoftWare)
+
+                    <img class="img-thumbnail" width="150" height="150"
+                         src="@Url.Action("GetImage", "Web",
+                        new { softId = Model.ID_SoftWare })" />
+                }
+            </div>
+            
+            
+          
         </div>
         <div class="panel-footer">
             <input type="submit" value="Сохранить" class="btn btn-primary" />
