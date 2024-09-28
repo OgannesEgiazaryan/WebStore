@@ -21,7 +21,7 @@
 1. **Клонирование проекта**  
    Клонируйте репозиторий с проектом с помощью Git:
    ```sh
-   git clone https://github.com/A1k0g01ik/WebStore.git
+   git clone https://github.com/OgannesEgiazaryan/WebStore.git
    ```
 2. **Открытие проекта**
   Откройте проект в Visual Studio:
