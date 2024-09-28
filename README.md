@@ -19,10 +19,8 @@
 ### Установка
 
 1. **Клонирование проекта**  
-   Клонируйте репозиторий с проектом с помощью Git:
-   ```sh
-   git clone https://github.com/OgannesEgiazaryan/WebStore.git
-   ```
+   Клонируйте репозиторий с проектом с помощью Git или скачать архивом
+
 2. **Открытие проекта**
   Откройте проект в Visual Studio:
 
@@ -30,19 +28,13 @@
   2. Выберите опцию Open a project or solution и откройте .sln файл проекта.
 
 3. **Установка зависимостей**
-  Убедитесь, что все зависимости установлены. Это можно сделать с помощью команды:
-   ```sh
-   dotnet restore
-   ```
+  Убедитесь, что все зависимости установлены.
 
 4. **Запуск проекта**
   Для запуска проекта используйте Visual Studio или командную строку:
 
   - В Visual Studio: нажмите F5 или выберите Debug -> Start Debugging.
-  - В командной строке:
-  ```sh
-   dotnet run
-  ```
+
 ## Разработка
 
 ### Требования
@@ -53,24 +45,13 @@
 - SQL Server
 
 ### Установка зависимостей
-Чтобы установить все необходимые зависимости, выполните следующую команду в корневой папке проекта:
+Проверить чтобы все зависимости были установлены:
+WebStore.Domain от System.ComponentModel.DataAnnotations
+WebStore.WebUI от WebStore.Domain
+WebStore.UnitTests от WebStore.Domain, WebStore.WebUI, System.Web, Microsoft.CSharp
 
-```bash
-dotnet restore
-```
-
-### Запуск Development сервера
-Чтобы запустить сервер для разработки, выполните команду:
-```sh
-dotnet run
-```
+### Запуск 
 Проект по умолчанию будет доступен по адресу https://localhost:44356/.
-
-### Создание билда
-Чтобы выполнить сборку проекта для production-окружения, выполните команду:
-```sh
-dotnet publish --configuration Release
-```
 
 ## Тестирование
 
@@ -79,12 +60,6 @@ dotnet publish --configuration Release
 1. Откройте проект в Visual Studio.
 2. Откройте окно **Test Explorer** (Тестовый обозреватель) через меню: **Test** -> **Test Explorer**.
 3. Запустите все тесты, нажав на кнопку **Run All** в окне Test Explorer.
-
-Также можно запустить тесты через командную строку с помощью `dotnet test`:
-
-```sh
-dotnet test
-```
 
 ## FAQ 
 Вопросов не поступало.
