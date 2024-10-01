@@ -77,3 +77,6 @@ WebStore.UnitTests от WebStore.Domain, WebStore.WebUI, System.Web, Microsoft.C
 
 ## Источники
 Утерянный гайд в интернете, помогший мне разобраться 
+
+## P.S.
+Так много JavaScript на GitHub ибо былы добавлены библиотеки, которые не использовались и не удалены, my bad
